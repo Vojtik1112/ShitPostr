@@ -5,35 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="author" content="Adam Novák" />
   <title>Adam Novák</title>
-  <link rel="stylesheet" href="index/styleindex.css">
+  <link rel="stylesheet" href="styleindex.css">
 </head>
 <body>
-  <!-- Navigace -->
-  <nav>
-    <div class="nav-item" id="tasks-toggle">Úkoly
-      <ul class="list" id="tasks-list">
-        <li><a href="kinosal/kinosal.html">Kinosál</a></li>
-        <li><a href="gamba.html">Gamba</a></li>
-        <li><a href="uctenka.html">Účtenka</a></li>
-        <li><a href="tierlist/tierlist.html">Tierlist</a></li>
-        <li><a href="stiracilos.html">Stírací los</a></li>
-        <li><a href="datecyklypole.html">Date, cykly a pole</a></li>
-        <li><a href="form.html">Formulář</a></li>
-      </ul>
-    </div>
-    <div class="nav-item" id="contacts-toggle">Kontakty
-      <ul class="list" id="contacts-list">
-        <li><a href="mailto: novaka.07@spst.eu">email</a></li>
-        <li><a href="https://instagram.com/jaromir021">Instagram</a></li>
-      </ul>
-    </div>
-  </nav>
+ 
 
   <!-- Three.js pozadí -->
   <div id="three-container"></div>
 
   <!-- Overlay úvodní -->
-  <div class="overlay" id="overlay" onclick="toggleContent(true)">
+  <div class="overlay" id="overlay">
     <div class="waviy">
       <span style="--i:1">A</span>
       <span style="--i:2">d</span>
@@ -51,16 +32,14 @@
   <!-- Skrytý obsah -->
   <div class="hidden-content" id="content">
     <span class="close-button" onclick="toggleContent(false)">✖</span>
-    <h2>O mně</h2>
-    <p>Jsem Adam Novák, student s vášní pro IT a technologie. Spojuji teorii s praxí a hledám nové výzvy.</p>
-    <h2>Dovednosti</h2>
-    <p>Programování, samostatnost, týmová spolupráce a kreativita jsou mými silnými stránkami.</p>
-    <h2>Moji přátelé</h2>
-    <p>
-      <a href="https://novakv.4fan.cz/" target="_blank">Vojta</a> •
-      <a href="https://masteraj.4fan.cz/" target="_blank">Jirka</a> •
-      <a href="https://rihav.4fan.cz/" target="_blank">Druhej Vojta</a>
-    </p>
+    <h2>Kontakt</h2>
+    <ul class="projects-list">
+      <li><strong>Supercell ID:</strong> <span id="supercell-id">#SC-0Q8R0P02QY9</span></li>
+      <li><strong>Instagram:</strong> <a href="https://instagram.com/jaromir021" target="_blank">@jaromir021</a></li>
+      <li><strong>Email:</strong> <a href="mailto: novaka.07@spst.eu">novaka.07@spst.eu</a></li>
+      <li><strong>OnlyFans:</strong> <a href="#" id="onlyfans-link" target="_blank">Stay tuned..</a></li>
+      <li><strong>Github:</strong> <a href="https://github.com/adamos962" id="github-link" target="_blank">adamos962</a></li>
+    </ul>
   </div>
 
   <footer class="mini-footer">
@@ -68,6 +47,7 @@
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="index/scriptindex.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128/examples/js/loaders/GLTFLoader.js"></script>
+  <script src="scriptindex.js"></script>
 </body>
 </html> 
