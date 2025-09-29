@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotřebitelské spory - Technické služby Dačice</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="tsd.png">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-info">
+                <span>U Stadionu 50, 380 01 Dačice</span><br>
+                <span>Telefon: <a href="tel:+420384420249">+420 384 420 249</a></span>
+            </div>
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="tsd.png" alt="Logo" class="logo">
+                </a>
+            </div>
+            <button class="hamburger" aria-label="Otevřít menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="index.html#nabidkasluzeb">NABÍDKA SLUŽEB</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="informacni-znaceni.html">Informační značení</a></li>
+                        <li><a href="reklamni-panely.html">Reklamní panely</a></li>
+                        <li><a href="zemni-prace.html">Zemní práce</a></li>
+                        <li><a href="nakladni-doprava.html">Nákladní doprava</a></li>
+                        <li><a href="pronajem-plosiny.html">Pronájem plošiny MP13</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="index.html#sluzbymestu">SLUŽBY MĚSTU</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="udrzba-komunikaci.html">Údržba komunikací</a></li>
+                        <li><a href="sprava-osvetleni.html">Správa veřejného osvětlení</a></li>
+                        <li><a href="cistota-mesta.html">Čistota města</a></li>
+                        <li><a href="sprava-pohrebist.html">Správa pohřebišť</a></li>
+                        <li><a href="udrzba-zelene.html">Údržba veřejné zeleně</a></li>
+                    </ul>
+                </li>
+                <li><a href="index.html#kontakt">KONTAKT</a></li>
+                <li class="dropdown">
+                    <a href="index.html#sportoviste">SPORTOVIŠTĚ</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="https://www.dasport.cz/" target="_blank">www.dasport.cz</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="index.html#verejneinfo">VEŘEJNÉ INFORMACE</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="spotrebitelske-spory.html">Informace o subjektu mimosoudního řešení spotřebitelských sporů</a></li>
+                        <li><a href="gdpr.html">GDPR</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <h1>INFORMACE O SUBJEKTU MIMOSOUDNÍHO ŘEŠENÍ SPOTŘEBITELSKÝCH SPORŮ</h1>
+        
+        <h3 style="padding-bottom: 30px;">
+            1. Spotřebitel má právo podat návrh na mimosoudní řešení takového sporu určenému subjektu mimosoudního řešení spotřebitelských sporů, kterým je:
+        </h3>
+
+        <ul>
+            <li><p>Česká obchodní inspekce</p></li>
+            <li><p>Ústřední inspektorát - oddělení ADR</p></li>
+            <li><p>Štěpánská 15</p></li>
+            <li><p>120 00 Praha 2</p></li>
+            <li><p>Email: adr@coi.cz</p></li>
+            <li><p>Web: <a href="https://adr.coi.cz">https://adr.coi.cz</a></p></li>
+        </ul>
+        <h3 style="padding-top: 30px;">
+            2. Česká obchodní inspekce je dozorovým orgánem vykonávajícím dohled nad ochranou spotřebitele, postupující podle zákona č. 64/1986 Sb., o České obchodní inspekci, ve znění pozdějších předpisů, a dalších právních předpisů. Internetová stránka České obchodní inspekce je www.coi.cz.
+        </h3>
+    
+    </main>
+
+    <div class="back-to-home">
+        <a href="index.html" class="back-button">Zpět na hlavní stránku</a>
+    </div>
+
+    <footer>
+        <p>© 2025 Technické služby Dačice s.r.o. Všechna práva vyhrazena.</p>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+            });
+        });
+    </script>
+</body>
+</html> 

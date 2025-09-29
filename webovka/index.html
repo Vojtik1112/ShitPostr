@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technické služby Dačice - Údržba města, komunikací a veřejných prostranství</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Technické služby Dačice - Údržba města, komunikací a veřejných prostranství">
+    <meta name="description" content="Technické služby Dačice zajišťují zimní a letní údržbu místních komunikací, chodníků a veřejných prostranství v Dačicích a okolních obcích. Nabízíme služby pro město i občany.">
+    <meta name="keywords" content="technické služby Dačice, údržba komunikací, veřejné osvětlení, údržba zeleně, zimní údržba, letní údržba, Dačice, technické služby">
+    <meta name="author" content="Technické služby Dačice s.r.o.">
+    <meta name="robots" content="index, follow">
+    <meta name="language" content="Czech">
+    <meta name="revisit-after" content="7 days">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.tsdacice.cz/">
+    <meta property="og:title" content="Technické služby Dačice - Údržba města, komunikací a veřejných prostranství">
+    <meta property="og:description" content="Technické služby Dačice zajišťují zimní a letní údržbu místních komunikací, chodníků a veřejných prostranství v Dačicích a okolních obcích.">
+    <meta property="og:image" content="https://www.tsdacice.cz/tsd.png">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.tsdacice.cz/">
+    <meta property="twitter:title" content="Technické služby Dačice - Údržba města, komunikací a veřejných prostranství">
+    <meta property="twitter:description" content="Technické služby Dačice zajišťují zimní a letní údržbu místních komunikací, chodníků a veřejných prostranství v Dačicích a okolních obcích.">
+    <meta property="twitter:image" content="https://www.tsdacice.cz/tsd.png">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://www.tsdacice.cz/">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="tsd.png">
+    <link rel="apple-touch-icon" href="tsd.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }   
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, rgba(246, 253, 246, 0.95), rgba(244, 250, 255, 0.95));
+            min-height: 100vh;
+        }
+
+    
+        .animate-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .animate-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .animate-up {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .animate-in {
+            opacity: 1;
+            transform: translate(0);
+        }
+
+        .navbar {
+            background-color: #e8f0e6;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 0.5rem 0;
+            border-bottom: 3px solid #d9eddf;
+        }
+
+        .navbar-container {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            gap: 1rem;
+        }
+
+        .navbar-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            font-size: 0.85rem;
+            color: #2c3e50;
+            margin-right: 1.5rem;
+            min-width: 210px;
+            line-height: 1.2;
+        }
+
+        .navbar-info a {
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .navbar-info a:hover {
+            color: #0056b3;
+        }
+
+        .logo-container {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: auto;
+            margin-bottom: 0;
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            padding: 0.3rem 0;
+        }
+
+        .nav-links a.contact-link {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .nav-links a:hover {
+            color: #007bff;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #007bff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .section {
+            padding: 4rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #007bff;
+        }
+
+        .section p {
+            color: #2c3e50;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .section ul {
+            list-style-type: none;
+            margin-left: 2rem;
+            color: #2c3e50;
+        }
+
+        .section ul li {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .section ul li:before {
+            content: "→";
+            margin-right: 0.8rem;
+            color: #007bff;
+            font-size: 1.1rem;
+        }
+
+        .section a {
+            color: #007bff;
+            text-decoration: none;
+            position: relative;
+            transition: color 0.3s ease;
+            font-weight: 500;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            background-color: rgba(0, 123, 255, 0.05);
+        }
+
+        .section a:hover {
+            color: #0056b3;
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+
+        .section a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0.4rem;
+            background-color: #007bff;
+            transition: width 0.3s ease;
+        }
+
+        .section a:hover::after {
+            width: calc(100% - 0.8rem);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 40px;
+            height: 40px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 28px;
+            height: 3px;
+            margin: 5px 0;
+            background: #333;
+            border-radius: 2px;
+            transition: 0.3s;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-container {
+                padding: 0 1rem;
+                flex-direction: row;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                gap: 1.5rem;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #fff;
+                box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+                padding: 1.5rem 0;
+                z-index: 1001;
+                text-align: center;
+            }
+            .nav-links.open {
+                display: flex;
+            }
+            .logo {
+                height: 40px;
+            }
+            .main-content {
+                margin-top: 70px;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .navbar-info {
+                display: none;
+            }
+        }
+
+      
+        @media (max-width: 768px) {
+            .slide h2 {
+                font-size: 1.5rem;
+                margin-left: 2vw;
+            }
+            .slide .slide-desc,
+            .slide p,
+            .slide .contact-info {
+                margin-left: 2vw;
+                font-size: 1rem;
+            }
+        }
+        .contact-info p {
+            margin: 0.3em 0;
+            font-size: 1.1rem;
+        }
+        .contact-info a {
+            color: #fff;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+        .contact-info a:hover {
+            color: #bae6fd;
+        }
+        
+        .dropdown {
+            position: relative;
+        }
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            min-width: 200px;
+            max-width: 300px;
+            z-index: 2000;
+            border-radius: 0 0 8px 8px;
+            padding: 0.5rem 0;
+        }
+        .dropdown-menu li {
+            list-style: none;
+        }
+        .dropdown-menu a {
+            display: block;
+            padding: 0.7rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            font-size: 0.9rem;
+            white-space: normal;
+            word-wrap: break-word;
+            transition: background 0.2s, color 0.2s;
+        }
+        .dropdown-menu a:hover {
+            background: #f0f4fa;
+            color: #007bff;
+        }
+        .dropdown:hover > .dropdown-menu {
+            display: block;
+        }
+        @media (max-width: 900px) {
+            .dropdown-menu {
+                position: static;
+                box-shadow: none;
+                min-width: 0;
+                border-radius: 0;
+                padding: 0;
+            }
+            .dropdown-menu a {
+                padding: 0.7rem 1rem;
+            }
+        }
+
+        footer {
+            background-color:#ffffff;
+            padding: 2rem 0;
+            margin-top: 4rem;
+            border-top: 3px solid #c1faa2;
+            text-align: center;
+            color: #666;
+        }
+
+        footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-info">
+                <span>U Stadionu 50, 380 01 Dačice</span><br>
+                <span>Telefon: <a href="tel:+420384420249">+420 384 420 249</a></span>
+            </div>
+            <div class="logo-container">
+                <a href="index.html">
+                    <img src="tsd.png" alt="Logo" class="logo">
+                </a>
+            </div>
+            <button class="hamburger" aria-label="Otevřít menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li class="dropdown">
+                    <a href="#nabidkasluzeb">NABÍDKA SLUŽEB</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="informacni-znaceni.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Informační značení</a></li>
+                        <li><a href="reklamni-panely.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Reklamní panely</a></li>
+                        <li><a href="zemni-prace.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Zemní práce</a></li>
+                        <li><a href="nakladni-doprava.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Nákladní doprava</a></li>
+                        <li><a href="pronajem-plosiny.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Pronájem plošiny MP13</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#sluzbymestu">SLUŽBY MĚSTU</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="udrzba-komunikaci.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Údržba komunikací</a></li>
+                        <li><a href="sprava-osvetleni.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Správa veřejného osvětlení</a></li>
+                        <li><a href="cistota-mesta.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Čistota města</a></li>
+                        <li><a href="sprava-pohrebist.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Správa pohřebišť</a></li>
+                        <li><a href="udrzba-zelene.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Údržba veřejné zeleně</a></li>
+                    </ul>
+                </li>
+                <li><a href="#kontakt" class="contact-link">KONTAKT</a></li>
+                <li class="dropdown">
+                    <a href="#sportoviste">SPORTOVIŠTĚ</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="https://www.dasport.cz/" target="_blank">www.dasport.cz</a></li>
+                        
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#verejneinfo">VEŘEJNÉ INFORMACE</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="spotrebitelske-spory.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Informace o subjektu mimosoudního řešení spotřebitelských sporů</a></li>
+                        <li><a href="gdpr.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">GDPR</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 1.5rem;" class="animate-up">
+            <img src="tsd.png" alt="Logo" style="height: 100px; width: auto;" class="animate-left">
+            <h1 style="font-family: 'Montserrat', sans-serif; font-weight: 600; color: #2c3e50; margin: 0;" class="animate-right">Technické služby Dačice</h1>
+        </div>
+        <p style="font-size: 1.3rem; line-height: 1.8; color: #333; font-weight: 500; margin: 1.5rem 0; padding: 1rem; background-color: #f8f8f8; border-left: 4px solid #9ce89f; border-radius: 4px;" class="animate-up">
+            TS zajišťují zimní a letní údržbu místních komunikací, chodníků a veřejných prostranství v samotném městě a jeho místních částech (Velký Pěčín, Malý Pěčín, Bílkov, Borek, Chlumec, Lipolec, Hostkovice, Dolní Němčice, Prostřední Vydří, Hradištko, Toužín).
+        </p>
+
+
+        <div class="section" id="nabidkasluzeb">
+            <h2>NABÍDKA SLUŽEB</h2>
+            <p>Komplexní služby pro město i občany. Zajišťujeme údržbu, svoz odpadu, péči o zeleň a další.</p>
+            <ul>
+                <li><a href="informacni-znaceni.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Informační značení</a></li>
+                <li><a href="reklamni-panely.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Reklamní panely</a></li>
+                <li><a href="zemni-prace.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Zemní práce</a></li>
+                <li><a href="nakladni-doprava.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Nákladní doprava</a></li>
+                <li><a href="pronajem-plosiny.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Pronájem plošiny MP13</a></li>
+            </ul>
+        </div>
+
+        <div class="section" id="sluzbymestu">
+            <h2>SLUŽBY MĚSTU</h2>
+            <p>Podpora a servis pro městskou infrastrukturu, veřejné osvětlení, hřbitovy a čistotu města.</p>
+            <ul>
+                <li><a href="udrzba-komunikaci.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Údržba komunikací</a></li>
+                <li><a href="sprava-osvetleni.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Správa veřejného osvětlení</a></li>
+                <li><a href="cistota-mesta.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Čistota města</a></li>
+                <li><a href="sprava-pohrebist.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Správa pohřebišť</a></li>
+                <li><a href="udrzba-zelene.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Údržba veřejné zeleně</a></li>
+            </ul>
+        </div>
+
+        <div class="section" id="sportoviste">
+            <h2>SPORTOVIŠTĚ</h2>
+            <p>Správa a provoz sportovišť pro veřejnost – stadion, koupaliště, zimní stadion a další.</p>
+            <ul>
+                <li><a href="https://www.dasport.cz/" target="_blank">www.dasport.cz</a></li>
+            </ul>
+        </div>
+
+        <div class="section" id="verejneinfo">
+            <h2>VEŘEJNÉ INFORMACE</h2>
+            <p>Důležité dokumenty, výroční zprávy, rozpočty a veřejné zakázky na jednom místě.</p>
+            <ul>
+                <li><a href="spotrebitelske-spory.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Informace o subjektu mimosoudního řešení spotřebitelských sporů</a></li>
+                <li><a href="gdpr.html" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">GDPR</a></li>
+            </ul>
+        </div>
+
+        <div class="section" id="kontakt">
+            <h2>KONTAKT</h2>
+            <h2 style="margin-bottom: 1.5rem;"><u>Technické služby Dačice s.r.o</u></h2>
+            <ul style="list-style: none; padding: 0; margin-bottom: 2.5rem;">
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Adresa:</span>
+                    <span>U Stadionu 50/V; 380 01 Dačice</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">IČ:</span>
+                    <span>260 40 344</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">DIČ:</span>
+                    <span>CZ26040344</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Telefon:</span>
+                    <span>+420 384 420 249</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">ID datové schránky:</span>
+                    <span>uq96i7z</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Obchodní rejstřík:</span>
+                    <span>Společnost je zapsána v OR u KS v Českých Budějovicích v oddílu C, vložce číslo 10739</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Mapa:</span>
+                    <span><a href="https://maps.app.goo.gl/W1y46sVQ5HZR9SfGA" target="_blank" style="color: #007bff; text-decoration: none; transition: color 0.3s ease;">Zobrazit na mapě</a></span>
+                </li>
+            </ul>
+
+            <h2 style="margin-top: 2rem; margin-bottom: 1.5rem;"><u>Jednatel společnosti</u></h2>
+            <ul style="list-style: none; padding: 0; margin-bottom: 2.5rem;">
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Adresa:</span>
+                    <span><strong>Mojmír Holec</strong></span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Telefon:</span>
+                    <span>384 420 790</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Mobil:</span>
+                    <span>777 113 125</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">E-mail:</span>
+                    <span><a href="mailto:holec@tsdacice.cz">holec@tsdacice.cz</a></span>
+                </li>
+            </ul>
+
+            <h2 style="margin-top: 2rem; margin-bottom: 1.5rem;"><u>Technik, správce veřejného osvětlení</u></h2>
+            <ul style="list-style: none; padding: 0; margin-bottom: 2.5rem;">
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Adresa:</span>
+                    <span><strong>Zdeňek Riedling</strong></span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Telefon:</span>
+                    <span>384 420 249</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Mobil:</span>
+                    <span>777 113 126</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">E-mail:</span>
+                    <span><a href="mailto:riedling@tsdacice.cz">riedling@tsdacice.cz</a></span>
+                </li>
+            </ul>
+
+            <h2 style="margin-top: 2rem; margin-bottom: 1.5rem;"><u>Ekonomika</u></h2>
+            <ul style="list-style: none; padding: 0; margin-bottom: 2.5rem;">
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Adresa:</span>
+                    <span><strong>Miroslava Bártů</strong></span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Telefon:</span>
+                    <span>384 420 791</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Mobil:</span>
+                    <span>725 790 327</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">E-mail:</span>
+                    <span><a href="mailto:bartu@tsdacice.cz">bartu@tsdacice.cz</a></span>
+                </li>
+            </ul>
+
+            <h2 style="margin-top: 2rem; margin-bottom: 1.5rem;"><u>Správce hřbitovů</u></h2>
+            <ul style="list-style: none; padding: 0; margin-bottom: 2.5rem;">
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Adresa:</span>
+                    <span><strong>Zdeňek Wartha</strong></span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">Mobil:</span>
+                    <span>723 177 225</span>
+                </li>
+                <li style="display: flex; margin-bottom: 0.5rem;">
+                    <span style="min-width: 180px; font-weight: 500;">E-mail:</span>
+                    <span><a href="mailto:hrbitov@tsdacice.cz">hrbitov@tsdacice.cz</a></span>
+                </li>
+            </ul>
+
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2025 Technické služby Dačice s.r.o. Všechna práva vyhrazena.</p>
+    </footer>
+
+    <script>
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('open');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+            });
+        });
+
+        // Add scroll animation script
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation classes to elements
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section, index) => {
+                const elements = section.querySelectorAll('h2, p, ul, .cta-button');
+                elements.forEach((element, i) => {
+                    if (i % 2 === 0) {
+                        element.classList.add('animate-left');
+                    } else {
+                        element.classList.add('animate-right');
+                    }
+                });
+            });
+
+            // Intersection Observer for scroll animations
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-in');
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+
+            // Observe all animated elements
+            document.querySelectorAll('.animate-left, .animate-right, .animate-up').forEach((element) => {
+                observer.observe(element);
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

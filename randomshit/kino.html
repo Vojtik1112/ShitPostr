@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rezervační systém sedadel</title>
+    <link rel="stylesheet" href="stylekino.css">
+</head>
+<body>
+    <div class="container">
+        <div id="seating-grid" class="seating-grid"></div>
+        <div class="controls">
+            <div class="input-group">
+                <label for="rows">Počet řad:</label>
+                <input type="number" id="rows" min="1" max="10" value="4">
+            </div>
+            <div class="input-group">
+                <label for="seats">Počet sedadel v řadě:</label>
+                <input type="number" id="seats" min="1" max="10" value="5">
+            </div>
+            <div class="button-group">
+                <button onclick="updateSeating()">Upravit</button>
+                <button onclick="showCovidModal()">Upravit (Covid)</button>
+                <button onclick="reserveSelectedSeats()" class="reserve-button" id="reserveButton" disabled>Zarezervovat</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="covidModal" class="modal">
+        <div class="modal-content">
+            <h2>COVID Nastavení</h2>
+            <p>Pro změnu COVID nastavení zadejte heslo administrátora:</p>
+            <div class="input-group">
+                <input type="password" id="adminPassword" placeholder="Zadejte heslo">
+            </div>
+            <div class="modal-buttons">
+                <button onclick="validateAndApplyCovid()">Potvrdit</button>
+                <button onclick="closeCovidModal()">Zrušit</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="scriptkino.js"></script>
+</body>
+</html>
