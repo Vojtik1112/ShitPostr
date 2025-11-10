@@ -5,8 +5,8 @@ import { RouterLink } from 'vue-router';
 <template>
   <section class="not-found">
     <h1>404</h1>
-    <p>You reached the end of the feed. Nothing but tumbleweed here.</p>
-    <RouterLink class="btn" :to="{ name: 'chat' }">Back to chat</RouterLink>
+    <p>You yanked the wrong lever. This stall drains straight into the void.</p>
+    <RouterLink class="btn" :to="{ name: 'chat' }">Return to the stalls</RouterLink>
   </section>
 </template>
 
@@ -39,8 +39,8 @@ p {
   justify-content: center;
   padding: 0.85rem 1.75rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, #8a63ff, #ff619d);
-  color: #fff;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #fffbe3;
   font-weight: 600;
 }
 </style>

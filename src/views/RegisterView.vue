@@ -71,13 +71,13 @@ const handleSubmit = async () => {
   <div class="auth-layout">
     <section class="auth-card">
       <header>
-        <h1>Create your space</h1>
-        <p>Claim your handle and start a room for spicy takes.</p>
+        <h1>Reserve your stall</h1>
+        <p>Pick a nickname, hang a fresh air freshener, and open the floodgates for chaotic bathroom banter.</p>
       </header>
       <form class="auth-form" @submit.prevent="handleSubmit">
         <label>
           <span>Display name</span>
-          <input v-model="form.displayName" type="text" autocomplete="nickname" placeholder="Kara from Product" />
+          <input v-model="form.displayName" type="text" autocomplete="nickname" placeholder="Stall Bard" />
           <small v-if="fieldErrors.displayName">{{ fieldErrors.displayName }}</small>
         </label>
         <label>
@@ -97,22 +97,22 @@ const handleSubmit = async () => {
         </label>
         <p v-if="generalError" class="form-error">{{ generalError }}</p>
         <button type="submit" :disabled="submitting">
-          {{ submitting ? 'Creating account...' : 'Create account' }}
+          {{ submitting ? 'Stocking toilet paper...' : 'Open the stall' }}
         </button>
       </form>
       <footer>
         <p>
           Already in the crew?
-          <RouterLink :to="{ name: 'login' }">Sign in</RouterLink>
+          <RouterLink :to="{ name: 'login' }">Head inside</RouterLink>
         </p>
       </footer>
     </section>
     <aside class="auth-aside">
-      <h2>Set the tone</h2>
+      <h2>Dress the restroom</h2>
       <ul>
-        <li>Pick an avatar colour automatically tuned to your name.</li>
-        <li>Rooms persist locally so you can experiment without risk.</li>
-        <li>Helper bot breaks the ice while you draft the perfect post.</li>
+        <li>Avatar colours match your vibe—no clashing toilet seats here.</li>
+        <li>Rooms stay in your browser tank, so experiment without a mop.</li>
+        <li>Janitor bot drops rimshots while you craft legendary graffiti.</li>
       </ul>
     </aside>
   </div>
@@ -129,11 +129,11 @@ const handleSubmit = async () => {
 }
 
 .auth-card {
-  background: var(--surface-panel);
+  background: linear-gradient(180deg, rgba(206, 150, 87, 0.18), transparent), var(--surface-panel);
   border-radius: 1.5rem;
   border: 1px solid var(--border-subtle);
   padding: 2.5rem;
-  box-shadow: 0 28px 70px -40px rgba(16, 11, 27, 0.55);
+  box-shadow: var(--shadow-soft);
   display: grid;
   gap: 1.75rem;
 }
@@ -172,7 +172,7 @@ input {
 }
 
 input:focus {
-  outline: 3px solid rgba(138, 99, 255, 0.2);
+  outline: 3px solid rgba(196, 115, 47, 0.25);
   border-color: var(--accent-primary);
 }
 
@@ -184,8 +184,8 @@ small {
 button {
   border-radius: 0.85rem;
   border: none;
-  background: linear-gradient(135deg, #8a63ff, #ff619d);
-  color: white;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #fffbe3;
   font-weight: 600;
   padding: 0.9rem 1.5rem;
   cursor: pointer;

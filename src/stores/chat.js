@@ -31,30 +31,30 @@ const defaultConversations = (user) => {
   return [
     {
       id: `${user.id}-general`,
-      title: 'General',
-      description: 'Team-wide chat for quick updates and casual banter.',
+      title: 'Stall Gossip',
+      description: 'Mainline feed for emergency TP calls and questionable rumors.',
       participants: [user.id, 'helper-bot'],
       messages: [
         {
           id: `${user.id}-general-msg-1`,
           authorId: 'helper-bot',
           authorName: 'Helper Bot',
-          body: `Welcome ${friendlyName}! Let everyone know you joined.`,
+          body: `Welcome ${friendlyName}! Mind the puddles and announce your arrival.`,
           timestamp: new Date().toISOString(),
         },
       ],
     },
     {
       id: `${user.id}-ideas`,
-      title: 'Ideas',
-      description: 'Drop product ideas, memes, and bold experiments.',
+      title: 'Tank Think Tank',
+      description: 'Swap renovation ideas, prank blueprints, and signature scents.',
       participants: [user.id, 'helper-bot'],
       messages: [
         {
           id: `${user.id}-ideas-msg-1`,
           authorId: 'helper-bot',
           authorName: 'Helper Bot',
-          body: 'Share your wildest feature ideas. There are no bad takes here.',
+          body: 'Pitch your boldest stall upgrades. Heated seats? Disco flush? Say less.',
           timestamp: new Date().toISOString(),
         },
       ],
@@ -71,11 +71,11 @@ const createMessage = ({ authorId, authorName, body }) => ({
 })
 
 const helperBotResponses = [
-  'Got it! I am taking note of that.',
-  'Nice one. Want me to tag the team?',
-  'Bold idea! What makes you think this will shine?',
-  'Haha, that belongs in #memes. Love it.',
-  'Need a quick summary? I can draft one.',
+  'Copy that. Spraying some air freshener on this take.',
+  'Legendary. Should I etch that on the bathroom wall for you?',
+  'Bold move. Want me to page the janitor squad?',
+  'That stinks in the best way possible. 10/10 would flush again.',
+  'Need cover? I can blame the smell on the upstairs pipes.',
 ]
 
 export const useChatStore = defineStore('chat', () => {
@@ -157,13 +157,13 @@ export const useChatStore = defineStore('chat', () => {
     const conversation = {
       id: `${ownerId.value}-${Date.now()}`,
       title: trimmedTitle,
-      description: description?.trim() || 'New private chat',
+      description: description?.trim() || 'Freshly scrubbed secret stall',
       participants: [ownerId.value, 'helper-bot'],
       messages: [
         createMessage({
           authorId: 'helper-bot',
           authorName: 'Helper Bot',
-          body: `Thanks for starting ${trimmedTitle}. Say hi!`,
+          body: `Fresh porcelain who dis? ${trimmedTitle} is open for confessions.`,
         }),
       ],
     }

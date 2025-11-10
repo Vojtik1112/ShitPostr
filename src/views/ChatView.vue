@@ -40,7 +40,7 @@ const handleCreateConversation = () => {
       closeCreateModal()
     }
   } catch (error) {
-    createError.value = error.message || 'Unable to create the room.'
+    createError.value = error.message || 'Unable to prep that stall.'
   }
 }
 
@@ -69,22 +69,22 @@ const handleSendMessage = (body) => {
     <div v-if="showCreateModal" class="modal-backdrop" @click.self="closeCreateModal">
       <section class="modal">
         <header>
-          <h2>New room</h2>
-          <p>Spin up a fresh space for your next meme drop.</p>
+          <h2>New stall</h2>
+          <p>Name your next porcelain hangout and invite the crew to overshare.</p>
         </header>
         <form @submit.prevent="handleCreateConversation">
           <label>
-            <span>Room name</span>
-            <input v-model="createForm.title" type="text" placeholder="Late night brainstorm" />
+            <span>Stall name</span>
+            <input v-model="createForm.title" type="text" placeholder="Midnight flush circle" />
           </label>
           <label>
             <span>Description</span>
-            <textarea v-model="createForm.description" rows="3" placeholder="Totally serious product planning"></textarea>
+            <textarea v-model="createForm.description" rows="3" placeholder="Plotting the great flush heist"></textarea>
           </label>
           <p v-if="createError" class="error">{{ createError }}</p>
           <footer>
-            <button type="button" class="ghost" @click="closeCreateModal">Cancel</button>
-            <button type="submit">Create</button>
+            <button type="button" class="ghost" @click="closeCreateModal">Maybe later</button>
+            <button type="submit">Install stall</button>
           </footer>
         </form>
       </section>
@@ -102,7 +102,7 @@ const handleSendMessage = (body) => {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(16, 12, 28, 0.55);
+  background: rgba(58, 36, 20, 0.6);
   display: grid;
   place-items: center;
   padding: 2rem;
@@ -111,10 +111,10 @@ const handleSendMessage = (body) => {
 
 .modal {
   width: min(480px, 100%);
-  background: var(--surface-primary);
+  background: linear-gradient(180deg, rgba(220, 168, 101, 0.18), transparent), var(--surface-primary);
   border-radius: 1.25rem;
   border: 1px solid var(--border-subtle);
-  box-shadow: 0 60px 120px -70px rgba(18, 12, 32, 0.65);
+  box-shadow: var(--shadow-soft);
   padding: 2rem;
   display: grid;
   gap: 1.5rem;
@@ -158,7 +158,7 @@ textarea {
 
 input:focus,
 textarea:focus {
-  outline: 3px solid rgba(138, 99, 255, 0.2);
+  outline: 3px solid rgba(196, 115, 47, 0.25);
   border-color: var(--accent-primary);
 }
 
@@ -174,8 +174,8 @@ button {
   font-weight: 600;
   cursor: pointer;
   border: none;
-  color: white;
-  background: linear-gradient(135deg, #8a63ff, #ff619d);
+  color: #fffbe3;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
 }
 
 button.ghost {

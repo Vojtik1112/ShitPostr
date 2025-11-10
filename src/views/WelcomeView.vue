@@ -5,28 +5,28 @@ import { RouterLink } from 'vue-router';
 <template>
   <section class="welcome">
     <div class="welcome__hero">
-      <h1>Group chats without the chaos.</h1>
+      <h1>Flush hot takes with the homies.</h1>
       <p>
-        ShitPostr keeps your crew connected with threads, playful reactions, and helper bots that hype you up.
-        Spin up a room, drop your hottest take, and keep the vibe moving.
+        ShitPostr is the communal bathroom wall of the internet. Claim a stall, scribble a take, and let the
+        squad react in real time without the algorithmic air freshener.
       </p>
       <div class="welcome__cta">
-        <RouterLink class="btn primary" :to="{ name: 'register' }">Create account</RouterLink>
-        <RouterLink class="btn ghost" :to="{ name: 'login' }">Log in</RouterLink>
+        <RouterLink class="btn primary" :to="{ name: 'register' }">Claim a stall</RouterLink>
+        <RouterLink class="btn ghost" :to="{ name: 'login' }">I already have TP</RouterLink>
       </div>
     </div>
     <div class="welcome__card-grid">
       <article class="info-card">
-        <h3>Drop takes instantly</h3>
-        <p>Hit send and the gang sees it right away. No algorithms, no feeds to scroll.</p>
+        <h3>Stall-to-stall banter</h3>
+        <p>Drop a thought and it lands faster than the flush. Everybody hears it, nobody scrolls past.</p>
       </article>
       <article class="info-card">
-        <h3>Stay organised</h3>
-        <p>Spin up topic rooms, keep receipts, and pin the best memes for later.</p>
+        <h3>Contain the chaos</h3>
+        <p>Spin up themed stalls, pin the premium bathroom graffiti, and keep receipts in scented bins.</p>
       </article>
       <article class="info-card">
-        <h3>Bring your persona</h3>
-        <p>Custom avatars, status blurbs, and helper bots cheering from the sidelines.</p>
+        <h3>Celebrate the mess</h3>
+        <p>Custom avatars, status blurbs, and a helpful janitor bot cheering on your questionable life choices.</p>
       </article>
     </div>
   </section>
@@ -78,9 +78,9 @@ import { RouterLink } from 'vue-router';
 }
 
 .btn.primary {
-  background: linear-gradient(135deg, #8a63ff, #ff619d);
-  color: #fff;
-  box-shadow: 0 12px 30px -12px rgba(138, 99, 255, 0.65);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #fffbe3;
+  box-shadow: 0 12px 30px -14px rgba(123, 69, 26, 0.6);
 }
 
 .btn.primary:hover {
@@ -101,9 +101,9 @@ import { RouterLink } from 'vue-router';
 .info-card {
   padding: 1.5rem;
   border-radius: 1rem;
-  background: var(--surface-panel);
+  background: linear-gradient(180deg, rgba(243, 201, 143, 0.35), transparent), var(--surface-panel);
   border: 1px solid var(--border-subtle);
-  box-shadow: 0 10px 30px -22px rgba(20, 13, 32, 0.45);
+  box-shadow: var(--shadow-soft);
 }
 
 .info-card h3 {

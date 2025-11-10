@@ -108,7 +108,7 @@ export const useAuthStore = defineStore('auth', () => {
       email: normalisedEmail,
       password,
       avatarColor: randomColorFromString(display),
-      statusMessage: 'Available',
+      statusMessage: 'Ready to flush.',
     }
 
     users.value = [...users.value, newUser]

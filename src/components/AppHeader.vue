@@ -27,16 +27,19 @@ const handleLogout = () => {
 
 <template>
   <header class="app-header">
-    <router-link class="brand" :to="{ name: 'chat' }">ShitPostr</router-link>
+    <router-link class="brand" :to="{ name: 'chat' }">
+      <span class="brand__title">ShitPostr</span>
+      <span class="brand__tagline">Live from the porcelain pipeline</span>
+    </router-link>
     <nav class="app-nav">
-      <router-link :to="{ name: 'chat' }">Chat</router-link>
-      <router-link :to="{ name: 'profile' }">Profile</router-link>
+      <router-link :to="{ name: 'chat' }">Toilet Talk</router-link>
+      <router-link :to="{ name: 'profile' }">Stall Settings</router-link>
     </nav>
     <div class="user-panel" v-if="user">
       <div class="avatar" :style="{ backgroundColor: user.avatarColor }">{{ initials }}</div>
       <div class="identity">
         <span class="name">{{ user.displayName }}</span>
-        <span class="status">{{ user.statusMessage || 'Available' }}</span>
+        <span class="status">{{ user.statusMessage || 'On the throne' }}</span>
       </div>
       <button class="ghost" type="button" @click="handleLogout">Log out</button>
     </div>
@@ -51,17 +54,28 @@ const handleLogout = () => {
   gap: 1rem;
   padding: 0.75rem 2rem;
   border-bottom: 1px solid var(--border-subtle);
-  background-color: var(--surface-primary);
+  background: var(--surface-primary);
   position: sticky;
   top: 0;
   z-index: 10;
 }
 
 .brand {
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
+  display: flex;
+  flex-direction: column;
   color: var(--text-strong);
+  text-decoration: none;
+}
+
+.brand__title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
+.brand__tagline {
+  font-size: 0.85rem;
+  color: var(--text-subtle);
 }
 
 .app-nav {
@@ -121,7 +135,6 @@ button.ghost {
   font-weight: 500;
   transition: all 0.15s ease-in-out;
 }
-
 button.ghost:hover {
   border-color: var(--accent-primary);
   color: var(--accent-primary);

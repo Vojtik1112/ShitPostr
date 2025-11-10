@@ -24,7 +24,7 @@ watch(
 
 const handleSubmit = async () => {
   if (!form.displayName.trim()) {
-    errorMessage.value = 'Display name cannot be empty.'
+    errorMessage.value = 'Even a stall goblin needs a name tag.'
     return
   }
   saving.value = true
@@ -35,9 +35,9 @@ const handleSubmit = async () => {
       displayName: form.displayName,
       statusMessage: form.statusMessage,
     })
-    feedback.value = 'Profile updated successfully.'
+    feedback.value = 'Stall decal refreshed successfully.'
   } catch (error) {
-    errorMessage.value = error.message || 'Unable to update profile.'
+    errorMessage.value = error.message || 'The janitor slipped. Try saving again.'
   } finally {
     saving.value = false
   }
@@ -47,8 +47,8 @@ const handleSubmit = async () => {
 <template>
   <section class="profile">
     <header>
-      <h1>Your profile</h1>
-      <p>Polish your display name and let the timeline know your vibe.</p>
+      <h1>Your stall persona</h1>
+      <p>Polish the nameplate, tweak your scent description, and let the bathroom know who reigns supreme.</p>
     </header>
     <form @submit.prevent="handleSubmit">
       <label>
@@ -57,13 +57,13 @@ const handleSubmit = async () => {
       </label>
       <label>
         <span>Status message</span>
-        <textarea v-model="form.statusMessage" rows="3" placeholder="Currently vibing" />
+        <textarea v-model="form.statusMessage" rows="3" placeholder="Leaving a steamy note" />
       </label>
       <div class="feedback">
         <p v-if="feedback" class="success">{{ feedback }}</p>
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
       </div>
-      <button type="submit" :disabled="saving">{{ saving ? 'Saving...' : 'Save changes' }}</button>
+      <button type="submit" :disabled="saving">{{ saving ? 'Stamping...' : 'Save stall details' }}</button>
     </form>
   </section>
 </template>
@@ -92,11 +92,11 @@ header p {
 form {
   display: grid;
   gap: 1.5rem;
-  background: var(--surface-panel);
+  background: linear-gradient(180deg, rgba(220, 168, 101, 0.18), transparent), var(--surface-panel);
   border-radius: 1.25rem;
   padding: 2rem;
   border: 1px solid var(--border-subtle);
-  box-shadow: 0 30px 80px -80px rgba(18, 12, 32, 0.6);
+  box-shadow: var(--shadow-soft);
 }
 
 label {
@@ -122,7 +122,7 @@ textarea {
 
 input:focus,
 textarea:focus {
-  outline: 3px solid rgba(138, 99, 255, 0.2);
+  outline: 3px solid rgba(196, 115, 47, 0.25);
   border-color: var(--accent-primary);
 }
 
@@ -147,9 +147,9 @@ button {
   padding: 0.85rem 1.8rem;
   border-radius: 999px;
   border: none;
-  color: white;
+  color: #fffbe3;
   font-weight: 600;
-  background: linear-gradient(135deg, #8a63ff, #ff619d);
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   cursor: pointer;
   transition: transform 0.2s ease;
 }

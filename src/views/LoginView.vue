@@ -57,8 +57,8 @@ const handleSubmit = async () => {
   <div class="auth-layout">
     <section class="auth-card">
       <header>
-        <h1>Welcome back</h1>
-        <p>Drop back into the stream. Your crew missed you.</p>
+        <h1>Welcome back to the stall</h1>
+        <p>The crew kept the seat warm. Slide in and keep the pipeline flowing.</p>
       </header>
       <form class="auth-form" @submit.prevent="handleSubmit">
         <label>
@@ -73,22 +73,22 @@ const handleSubmit = async () => {
         </label>
         <p v-if="generalError" class="form-error">{{ generalError }}</p>
         <button type="submit" :disabled="submitting">
-          {{ submitting ? 'Signing in...' : 'Sign in' }}
+          {{ submitting ? 'Unlocking stall...' : 'Enter bathroom' }}
         </button>
       </form>
       <footer>
         <p>
           No account yet?
-          <RouterLink :to="{ name: 'register' }">Create one</RouterLink>
+          <RouterLink :to="{ name: 'register' }">Grab a key</RouterLink>
         </p>
       </footer>
     </section>
     <aside class="auth-aside">
-      <h2>Keep the vibe alive</h2>
+      <h2>Keep the latrine lively</h2>
       <ul>
-        <li>Thread replies and emoji reacts keep context tight.</li>
-        <li>Helper bot nudges you with gentle reminders and jokes.</li>
-        <li>Everything syncs in your browser — no backend required.</li>
+        <li>Thread replies keep gossip contained to the right stall.</li>
+        <li>Janitor bot swings by with fresh air and friendly roasts.</li>
+        <li>Your mess lives in the browser tank—no cloud plumbers involved.</li>
       </ul>
     </aside>
   </div>
@@ -105,11 +105,11 @@ const handleSubmit = async () => {
 }
 
 .auth-card {
-  background: var(--surface-panel);
+  background: linear-gradient(180deg, rgba(206, 150, 87, 0.18), transparent), var(--surface-panel);
   border-radius: 1.5rem;
   border: 1px solid var(--border-subtle);
   padding: 2.5rem;
-  box-shadow: 0 28px 70px -40px rgba(16, 11, 27, 0.55);
+  box-shadow: var(--shadow-soft);
   display: grid;
   gap: 1.75rem;
 }
@@ -148,7 +148,7 @@ input {
 }
 
 input:focus {
-  outline: 3px solid rgba(138, 99, 255, 0.2);
+  outline: 3px solid rgba(196, 115, 47, 0.25);
   border-color: var(--accent-primary);
 }
 
@@ -160,8 +160,8 @@ small {
 button {
   border-radius: 0.85rem;
   border: none;
-  background: linear-gradient(135deg, #8a63ff, #ff619d);
-  color: white;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: #fffbe3;
   font-weight: 600;
   padding: 0.9rem 1.5rem;
   cursor: pointer;

@@ -54,7 +54,7 @@ const handleKeydown = (event) => {
         <h2>{{ conversation.title }}</h2>
         <p>{{ conversation.description }}</p>
       </div>
-      <span class="participant-count">{{ conversation.participants.length }} participants</span>
+      <span class="participant-count">{{ conversation.participants.length }} stallmates</span>
     </header>
     <div ref="messageListRef" class="chat-window__messages">
       <article
@@ -74,15 +74,15 @@ const handleKeydown = (event) => {
       <textarea
         v-model="draft"
         rows="2"
-        placeholder="Share a spicy take"
+        placeholder="Drop a porcelain proclamation"
         @keydown="handleKeydown"
       ></textarea>
-      <button type="submit" :disabled="!draft.trim()">Send</button>
+      <button type="submit" :disabled="!draft.trim()">Flush</button>
     </form>
   </section>
   <section v-else class="chat-window chat-window--empty">
-    <h2>Select a room to get started</h2>
-    <p>Create a new space or jump into an existing thread.</p>
+    <h2>Select a stall to get started</h2>
+    <p>Crack open a new porcelain palace or slide into an existing gossip loop.</p>
   </section>
 </template>
 
@@ -92,7 +92,7 @@ const handleKeydown = (event) => {
   grid-template-rows: auto minmax(0, 1fr) auto;
   background: var(--surface-primary);
   border-radius: 1.5rem;
-  box-shadow: 0 30px 80px -70px rgba(21, 16, 33, 0.7);
+  box-shadow: var(--shadow-soft);
   overflow: hidden;
 }
 
@@ -126,7 +126,7 @@ const handleKeydown = (event) => {
   overflow-y: auto;
   display: grid;
   gap: 1rem;
-  background: linear-gradient(180deg, rgba(138, 99, 255, 0.07), transparent 120%);
+  background: linear-gradient(180deg, rgba(205, 140, 67, 0.12), transparent 120%);
 }
 
 .chat-message {
@@ -142,7 +142,7 @@ const handleKeydown = (event) => {
 
 .chat-message.outgoing {
   margin-left: auto;
-  background: linear-gradient(135deg, rgba(138, 99, 255, 0.2), rgba(255, 97, 157, 0.25));
+  background: linear-gradient(135deg, rgba(196, 115, 47, 0.35), rgba(139, 79, 31, 0.3));
   border-color: transparent;
 }
 
@@ -182,7 +182,7 @@ textarea {
 }
 
 textarea:focus {
-  outline: 3px solid rgba(138, 99, 255, 0.2);
+  outline: 3px solid rgba(196, 115, 47, 0.25);
   border-color: var(--accent-primary);
 }
 
@@ -192,8 +192,8 @@ button {
   padding: 0.75rem 1.75rem;
   font-weight: 600;
   cursor: pointer;
-  color: white;
-  background: linear-gradient(135deg, #8a63ff, #ff619d);
+  color: #fffbe3;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   transition: transform 0.2s ease;
 }
 

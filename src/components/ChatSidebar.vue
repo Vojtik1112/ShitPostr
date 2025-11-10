@@ -38,11 +38,11 @@ const handleCreate = () => {
 <template>
   <aside class="sidebar">
     <div class="sidebar__header">
-      <h2>Rooms</h2>
-      <button type="button" class="pill" @click="handleCreate">+ New room</button>
+      <h2>Stalls</h2>
+      <button type="button" class="pill" @click="handleCreate">+ New stall</button>
     </div>
     <div class="sidebar__search">
-      <input v-model="query" type="search" placeholder="Search rooms" />
+      <input v-model="query" type="search" placeholder="Sniff out a stall" />
     </div>
     <div class="sidebar__list" v-if="filteredConversations.length">
       <button
@@ -65,8 +65,8 @@ const handleCreate = () => {
       </button>
     </div>
     <div class="sidebar__empty" v-else>
-      <p>No rooms matched. Create a fresh one!</p>
-      <button type="button" class="pill" @click="handleCreate">Start a room</button>
+      <p>No stalls matched. Crack open a fresh porcelain palace!</p>
+      <button type="button" class="pill" @click="handleCreate">Start a stall</button>
     </div>
   </aside>
 </template>
@@ -134,12 +134,12 @@ const handleCreate = () => {
 
 .conversation:hover {
   border-color: var(--border-subtle);
-  background: rgba(138, 99, 255, 0.06);
+  background: rgba(196, 115, 47, 0.08);
 }
 
 .conversation.active {
   border-color: var(--accent-primary);
-  background: rgba(138, 99, 255, 0.12);
+  background: rgba(196, 115, 47, 0.18);
 }
 
 .conversation__title {
