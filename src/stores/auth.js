@@ -84,18 +84,18 @@ export const useAuthStore = defineStore('auth', () => {
     const display = displayName.trim()
 
     if (!display) {
-      throw new Error('Display name is required.')
+      throw new Error('Přezdívka je povinná.')
     }
     if (!normalisedEmail) {
-      throw new Error('Email is required.')
+      throw new Error('E-mail je povinný.')
     }
     if (password.length < 8) {
-      throw new Error('Password must have at least 8 characters.')
+      throw new Error('Heslo musí mít alespoň 8 znaků.')
     }
 
     const existing = users.value.find((user) => user.email === normalisedEmail)
     if (existing) {
-      throw new Error('An account with this email already exists.')
+      throw new Error('Účet s tímto e-mailem už existuje.')
     }
 
     const id = typeof crypto !== 'undefined' && crypto.randomUUID
@@ -108,7 +108,7 @@ export const useAuthStore = defineStore('auth', () => {
       email: normalisedEmail,
       password,
       avatarColor: randomColorFromString(display),
-      statusMessage: 'Ready to flush.',
+  statusMessage: 'Připraven/a spláchnout.',
     }
 
     users.value = [...users.value, newUser]
@@ -121,11 +121,16 @@ export const useAuthStore = defineStore('auth', () => {
 
   const login = async ({ email, password }) => {
     initializeFromStorage()
-    const normalisedEmail = email.trim().toLowerCase()
+    const identifier = email.trim().toLowerCase()
 
-    const match = users.value.find((user) => user.email === normalisedEmail)
+    const match = users.value.find((user) => {
+      if (user.email === identifier) {
+        return true
+      }
+      return user.displayName.trim().toLowerCase() === identifier
+    })
     if (!match || match.password !== password) {
-      throw new Error('Invalid email or password.')
+      throw new Error('Nesedí přihlašovací údaje.')
     }
 
     currentUser.value = sanitizeUser(match)
@@ -140,12 +145,12 @@ export const useAuthStore = defineStore('auth', () => {
 
   const updateProfile = (payload) => {
     if (!currentUser.value) {
-      throw new Error('No active user session.')
+      throw new Error('Nemáme aktivního uživatele.')
     }
 
     const index = users.value.findIndex((user) => user.id === currentUser.value.id)
     if (index === -1) {
-      throw new Error('Unable to locate the profile.')
+      throw new Error('Profil jsme nenašli.')
     }
 
     const updated = {

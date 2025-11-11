@@ -1,27 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Pacifico&display=swap');
+
 :root {
-  font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-family: 'Montserrat', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
   line-height: 1.6;
   font-weight: 400;
-  color: #2d1b13;
-  background-color: #fdf3e0;
+  color: #fcebd6;
+  background-color: #2b1408;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  --surface-primary: #fff9f1;
-  --surface-panel: #f5e2c8;
-  --surface-highlight: #f1d3ad;
-  --border-subtle: rgba(125, 83, 41, 0.16);
-  --border-strong: rgba(99, 63, 31, 0.4);
-  --text-strong: #2d1b13;
-  --text-muted: #5b3a28;
-  --text-subtle: #7a5132;
-  --accent-primary: #c4732f;
-  --accent-secondary: #8b4f1f;
-  --danger-primary: #d35b32;
-  --success-primary: #4f8b3a;
-  --shadow-soft: 0 30px 80px -60px rgba(60, 37, 18, 0.45);
+  --brown-950: #1b0c05;
+  --brown-900: #2b1408;
+  --brown-800: #3b1c0d;
+  --brown-700: #4b2614;
+  --brown-600: #5b3018;
+  --sand-200: #f5d29b;
+  --sand-150: #f8dcb1;
+  --sand-100: #f9e4c1;
+  --sand-050: #fff5dd;
+  --slate-500: #85766d;
+  --slate-400: #9f8f85;
+  --slate-250: #c4b4a7;
+  --accent-sunset: #f6b768;
+  --accent-soft: #f3c58f;
+  --text-primary: #fcebd6;
+  --text-muted: #d7c1ac;
+  --text-subtle: #b69f8c;
+  --danger-primary: #ef7f63;
+  --success-primary: #75b26b;
+  --shadow-soft: 0 42px 120px -54px rgba(0, 0, 0, 0.55);
 }
 
 * {
@@ -32,19 +41,20 @@ body {
   margin: 0;
   min-height: 100vh;
   background:
-    radial-gradient(circle at top right, rgba(244, 198, 117, 0.45), transparent 55%),
-    radial-gradient(circle at bottom left, rgba(166, 111, 52, 0.35), transparent 60%),
-    var(--surface-primary);
-  color: var(--text-strong);
+    radial-gradient(circle at 12% 18%, rgba(246, 183, 104, 0.2), transparent 55%),
+    radial-gradient(circle at 88% 82%, rgba(102, 61, 32, 0.35), transparent 58%),
+    linear-gradient(160deg, var(--brown-900), var(--brown-800) 55%, var(--brown-900));
+  color: var(--text-primary);
 }
 
 a {
-  color: inherit;
+  color: var(--accent-soft);
   text-decoration: none;
+  transition: color 0.2s ease;
 }
 
 a:hover {
-  color: var(--accent-primary);
+  color: var(--sand-050);
 }
 
 #app {
@@ -69,4 +79,9 @@ button,
 input,
 textarea {
   font-family: inherit;
+  color: inherit;
+}
+
+::selection {
+  background: rgba(243, 197, 143, 0.4);
 }

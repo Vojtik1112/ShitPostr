@@ -5,8 +5,8 @@ import { RouterLink } from 'vue-router';
 <template>
   <section class="not-found">
     <h1>404</h1>
-    <p>You yanked the wrong lever. This stall drains straight into the void.</p>
-    <RouterLink class="btn" :to="{ name: 'chat' }">Return to the stalls</RouterLink>
+    <p>Zatáhl/a jsi za špatnou páku. Tahle kabinka ústí přímo do prázdna.</p>
+    <RouterLink class="btn" :to="{ name: 'chat' }">Zpět k místnostem</RouterLink>
   </section>
 </template>
 
@@ -22,8 +22,9 @@ import { RouterLink } from 'vue-router';
 h1 {
   font-size: clamp(4rem, 20vw, 9rem);
   margin: 0;
-  color: var(--accent-primary);
-  letter-spacing: -0.05em;
+  color: var(--sand-050);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 p {
@@ -37,10 +38,12 @@ p {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.85rem 1.75rem;
+  padding: 0.95rem 2rem;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  color: #fffbe3;
-  font-weight: 600;
+  background: linear-gradient(125deg, rgba(151, 143, 136, 0.85), rgba(123, 113, 106, 0.85));
+  color: var(--sand-050);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
 }
 </style>

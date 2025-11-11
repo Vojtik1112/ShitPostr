@@ -24,7 +24,7 @@ watch(
 
 const handleSubmit = async () => {
   if (!form.displayName.trim()) {
-    errorMessage.value = 'Even a stall goblin needs a name tag.'
+    errorMessage.value = 'Bez přezdívky tě na chodbě prostě nepoznáme.'
     return
   }
   saving.value = true
@@ -35,9 +35,9 @@ const handleSubmit = async () => {
       displayName: form.displayName,
       statusMessage: form.statusMessage,
     })
-    feedback.value = 'Stall decal refreshed successfully.'
+    feedback.value = 'Profil se povedlo uložit.'
   } catch (error) {
-    errorMessage.value = error.message || 'The janitor slipped. Try saving again.'
+    errorMessage.value = error.message || 'Něco uklouzlo. Zkus to prosím znovu.'
   } finally {
     saving.value = false
   }
@@ -47,23 +47,23 @@ const handleSubmit = async () => {
 <template>
   <section class="profile">
     <header>
-      <h1>Your stall persona</h1>
-      <p>Polish the nameplate, tweak your scent description, and let the bathroom know who reigns supreme.</p>
+      <h1>Tvůj porcelánový profil</h1>
+      <p>Pojmenuj trůn, dolad status a dej kabince vědět, kdo tady vládne.</p>
     </header>
     <form @submit.prevent="handleSubmit">
       <label>
-        <span>Display name</span>
+        <span>Přezdívka</span>
         <input v-model="form.displayName" type="text" autocomplete="nickname" />
       </label>
       <label>
-        <span>Status message</span>
-        <textarea v-model="form.statusMessage" rows="3" placeholder="Leaving a steamy note" />
+        <span>Status</span>
+        <textarea v-model="form.statusMessage" rows="3" placeholder="Zanech zprávu u zrcadla" />
       </label>
       <div class="feedback">
         <p v-if="feedback" class="success">{{ feedback }}</p>
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
       </div>
-      <button type="submit" :disabled="saving">{{ saving ? 'Stamping...' : 'Save stall details' }}</button>
+      <button type="submit" :disabled="saving">{{ saving ? 'Razím těsnění...' : 'Uložit profil' }}</button>
     </form>
   </section>
 </template>
@@ -72,16 +72,17 @@ const handleSubmit = async () => {
 .profile {
   max-width: 720px;
   margin: 0 auto;
-  padding: 3rem 2rem;
+  padding: 3.5rem 2rem;
   display: grid;
   gap: 2rem;
 }
 
 header h1 {
   margin: 0;
-  letter-spacing: -0.03em;
-  color: var(--text-strong);
-  font-size: 2.25rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sand-050);
+  font-size: 2.4rem;
 }
 
 header p {
@@ -92,28 +93,31 @@ header p {
 form {
   display: grid;
   gap: 1.5rem;
-  background: linear-gradient(180deg, rgba(220, 168, 101, 0.18), transparent), var(--surface-panel);
-  border-radius: 1.25rem;
-  padding: 2rem;
-  border: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-soft);
+  background: rgba(42, 20, 8, 0.6);
+  border-radius: 2rem;
+  padding: 2.5rem;
+  border: 1px solid rgba(255, 240, 214, 0.12);
+  box-shadow: 0 34px 120px -60px rgba(0, 0, 0, 0.6);
 }
 
 label {
   display: grid;
-  gap: 0.4rem;
-  color: var(--text-strong);
+  gap: 0.5rem;
+  color: var(--sand-100);
   font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
 }
 
 input,
 textarea {
-  border-radius: 0.9rem;
-  border: 1px solid var(--border-subtle);
-  padding: 0.85rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 240, 214, 0.16);
+  padding: 0.95rem 1.2rem;
   font-size: 1rem;
-  background: var(--surface-primary);
-  color: var(--text-strong);
+  background: rgba(132, 118, 109, 0.5);
+  color: var(--sand-050);
 }
 
 textarea {
@@ -122,8 +126,9 @@ textarea {
 
 input:focus,
 textarea:focus {
-  outline: 3px solid rgba(196, 115, 47, 0.25);
-  border-color: var(--accent-primary);
+  outline: none;
+  border-color: rgba(255, 240, 214, 0.42);
+  background: rgba(149, 132, 121, 0.6);
 }
 
 .feedback {
@@ -144,13 +149,15 @@ textarea:focus {
 
 button {
   justify-self: flex-start;
-  padding: 0.85rem 1.8rem;
+  padding: 0.95rem 1.9rem;
   border-radius: 999px;
   border: none;
-  color: #fffbe3;
-  font-weight: 600;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: var(--sand-050);
+  font-weight: 700;
+  background: linear-gradient(125deg, rgba(151, 143, 136, 0.85), rgba(123, 113, 106, 0.85));
   cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
   transition: transform 0.2s ease;
 }
 

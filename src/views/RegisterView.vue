@@ -10,14 +10,16 @@ const form = reactive({
   displayName: '',
   email: '',
   password: '',
-  confirmPassword: '',
+  termsAccepted: false,
+  chaosAccepted: false,
 })
 
 const fieldErrors = reactive({
   displayName: '',
   email: '',
   password: '',
-  confirmPassword: '',
+  termsAccepted: '',
+  chaosAccepted: '',
 })
 
 const submitting = ref(false)
@@ -27,23 +29,33 @@ const validate = () => {
   fieldErrors.displayName = ''
   fieldErrors.email = ''
   fieldErrors.password = ''
-  fieldErrors.confirmPassword = ''
+  fieldErrors.termsAccepted = ''
+  fieldErrors.chaosAccepted = ''
   generalError.value = ''
 
   if (!form.displayName.trim()) {
-    fieldErrors.displayName = 'Pick a display name so friends recognise you.'
+    fieldErrors.displayName = 'Vyber si přezdívku, ať tě ostatní poznají.'
   }
   if (!form.email.trim()) {
-    fieldErrors.email = 'Email is required.'
+    fieldErrors.email = 'E-mail je povinný.'
   }
   if (form.password.length < 8) {
-    fieldErrors.password = 'Password must be at least 8 characters.'
+    fieldErrors.password = 'Heslo musí mít alespoň 8 znaků.'
   }
-  if (form.password !== form.confirmPassword) {
-    fieldErrors.confirmPassword = 'Passwords do not match.'
+  if (!form.termsAccepted) {
+    fieldErrors.termsAccepted = 'Bez souhlasu s podmínkami kabinku neodemkneme.'
+  }
+  if (!form.chaosAccepted) {
+    fieldErrors.chaosAccepted = 'Potvrď, že zvládneš naše notifikace bez fyzické újmy.'
   }
 
-  return !fieldErrors.displayName && !fieldErrors.email && !fieldErrors.password && !fieldErrors.confirmPassword
+  return (
+    !fieldErrors.displayName &&
+    !fieldErrors.email &&
+    !fieldErrors.password &&
+    !fieldErrors.termsAccepted &&
+    !fieldErrors.chaosAccepted
+  )
 }
 
 const handleSubmit = async () => {
@@ -60,7 +72,7 @@ const handleSubmit = async () => {
     })
     router.push({ name: 'chat' })
   } catch (error) {
-    generalError.value = error.message || 'Registration failed. Please try again.'
+    generalError.value = error.message || 'Registrace selhala. Zkus to prosím znovu.'
   } finally {
     submitting.value = false
   }
@@ -68,136 +80,265 @@ const handleSubmit = async () => {
 </script>
 
 <template>
-  <div class="auth-layout">
-    <section class="auth-card">
-      <header>
-        <h1>Reserve your stall</h1>
-        <p>Pick a nickname, hang a fresh air freshener, and open the floodgates for chaotic bathroom banter.</p>
-      </header>
+  <div class="auth-screen">
+    <RouterLink class="auth-brand" :to="{ name: 'welcome' }">
+      <span class="auth-brand__badge">SP</span>
+      <span class="auth-brand__text">ShitPostr</span>
+    </RouterLink>
+
+    <section class="auth-panel">
+      <h1>Registrovat</h1>
+      <p class="auth-panel__lead">
+        Už máš účet?
+        <RouterLink :to="{ name: 'login' }">Přihlásit se</RouterLink>
+      </p>
       <form class="auth-form" @submit.prevent="handleSubmit">
         <label>
-          <span>Display name</span>
-          <input v-model="form.displayName" type="text" autocomplete="nickname" placeholder="Stall Bard" />
+          <span>Uživatelské jméno</span>
+          <input v-model="form.displayName" type="text" autocomplete="nickname" placeholder="Král Kohoutku" />
           <small v-if="fieldErrors.displayName">{{ fieldErrors.displayName }}</small>
         </label>
         <label>
-          <span>Email</span>
-          <input v-model="form.email" type="email" autocomplete="email" placeholder="you@example.com" />
+          <span>E-mail</span>
+          <input v-model="form.email" type="email" autocomplete="email" placeholder="tvuj.napad@shitpostr.beer" />
           <small v-if="fieldErrors.email">{{ fieldErrors.email }}</small>
         </label>
         <label>
-          <span>Password</span>
-          <input v-model="form.password" type="password" autocomplete="new-password" placeholder="At least 8 characters" />
+          <span>Heslo</span>
+          <input
+            v-model="form.password"
+            type="password"
+            autocomplete="new-password"
+            placeholder="minimálně 8 znaků"
+          />
           <small v-if="fieldErrors.password">{{ fieldErrors.password }}</small>
         </label>
-        <label>
-          <span>Confirm password</span>
-          <input v-model="form.confirmPassword" type="password" autocomplete="new-password" placeholder="Repeat your password" />
-          <small v-if="fieldErrors.confirmPassword">{{ fieldErrors.confirmPassword }}</small>
-        </label>
+
+        <div class="auth-consent">
+          <label class="checkbox">
+            <input v-model="form.termsAccepted" type="checkbox" />
+            <span class="checkbox__fake"></span>
+            <span class="checkbox__label">
+              Souhlasím s&nbsp;podmínkami a&nbsp;zásadami soukromí ShitPostr.beer a potvrzuji, že chápu, do čeho jdu.
+            </span>
+          </label>
+          <label class="checkbox">
+            <input v-model="form.chaosAccepted" type="checkbox" />
+            <span class="checkbox__fake"></span>
+            <span class="checkbox__label">
+              Ano, chci na vlastní nebezpečí memy, nabídky, pochybné push notifikace a občasné připomenutí, ať jdu ven.
+            </span>
+          </label>
+          <small v-if="fieldErrors.termsAccepted">{{ fieldErrors.termsAccepted }}</small>
+          <small v-if="fieldErrors.chaosAccepted">{{ fieldErrors.chaosAccepted }}</small>
+        </div>
+
         <p v-if="generalError" class="form-error">{{ generalError }}</p>
         <button type="submit" :disabled="submitting">
-          {{ submitting ? 'Stocking toilet paper...' : 'Open the stall' }}
+          {{ submitting ? 'Skladuji toaleťák...' : 'Zaregistrovat' }}
         </button>
       </form>
-      <footer>
-        <p>
-          Already in the crew?
-          <RouterLink :to="{ name: 'login' }">Head inside</RouterLink>
-        </p>
-      </footer>
     </section>
-    <aside class="auth-aside">
-      <h2>Dress the restroom</h2>
-      <ul>
-        <li>Avatar colours match your vibe—no clashing toilet seats here.</li>
-        <li>Rooms stay in your browser tank, so experiment without a mop.</li>
-        <li>Janitor bot drops rimshots while you craft legendary graffiti.</li>
-      </ul>
-    </aside>
   </div>
 </template>
 
 <style scoped>
-.auth-layout {
-  min-height: calc(100vh - 5rem);
-  display: grid;
-  grid-template-columns: minmax(0, 480px) minmax(0, 1fr);
-  gap: 3rem;
-  align-items: stretch;
-  padding: 4rem 2rem;
+.auth-screen {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4.5rem 1.5rem 3rem;
 }
 
-.auth-card {
-  background: linear-gradient(180deg, rgba(206, 150, 87, 0.18), transparent), var(--surface-panel);
-  border-radius: 1.5rem;
-  border: 1px solid var(--border-subtle);
-  padding: 2.5rem;
-  box-shadow: var(--shadow-soft);
+.auth-brand {
+  position: fixed;
+  top: 2.5rem;
+  left: 3rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--sand-050);
+}
+
+.auth-brand__badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(255, 240, 214, 0.1);
+  border: 1px solid rgba(255, 240, 214, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.auth-brand__text {
+  font-family: 'Pacifico', cursive;
+  font-size: 2rem;
+  letter-spacing: 0.04em;
+}
+
+.auth-panel {
+  width: min(460px, 100%);
   display: grid;
   gap: 1.75rem;
+  padding: 3.25rem 3rem 3.5rem;
+  border-radius: 2.75rem;
+  background: rgba(32, 15, 6, 0.55);
+  border: 1px solid rgba(255, 240, 214, 0.1);
+  box-shadow: 0 40px 120px -60px rgba(0, 0, 0, 0.65);
 }
 
-.auth-card header h1 {
+.auth-panel h1 {
   margin: 0;
-  font-size: 2.25rem;
-  letter-spacing: -0.04em;
-  color: var(--text-strong);
+  font-size: 2.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-.auth-card header p {
-  margin: 0.5rem 0 0;
+.auth-panel__lead {
+  margin: 0;
   color: var(--text-muted);
+}
+
+.auth-panel__lead a {
+  color: var(--sand-050);
+  font-weight: 600;
 }
 
 .auth-form {
   display: grid;
-  gap: 1.25rem;
+  gap: 1.45rem;
 }
 
 label {
   display: grid;
-  gap: 0.35rem;
+  gap: 0.5rem;
+  color: var(--sand-100);
   font-weight: 600;
-  color: var(--text-strong);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
 }
 
-input {
-  border-radius: 0.85rem;
-  border: 1px solid var(--border-subtle);
-  padding: 0.85rem 1rem;
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 240, 214, 0.16);
+  padding: 0.95rem 1.3rem;
   font-size: 1rem;
-  background: var(--surface-primary);
-  color: var(--text-strong);
+  background: rgba(132, 118, 109, 0.55);
+  color: var(--sand-050);
+  transition: border 0.2s ease, background 0.2s ease;
 }
 
-input:focus {
-  outline: 3px solid rgba(196, 115, 47, 0.25);
-  border-color: var(--accent-primary);
+input[type='text']::placeholder,
+input[type='email']::placeholder,
+input[type='password']::placeholder {
+  color: rgba(249, 228, 193, 0.6);
+}
+
+input[type='text']:focus,
+input[type='email']:focus,
+input[type='password']:focus {
+  outline: none;
+  border-color: rgba(255, 240, 214, 0.46);
+  background: rgba(149, 132, 121, 0.6);
+}
+
+.auth-consent {
+  display: grid;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.checkbox {
+  position: relative;
+  padding-left: 2.2rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.checkbox input {
+  position: absolute;
+  opacity: 0;
+  left: 0;
+  top: 0.25rem;
+  width: 1.4rem;
+  height: 1.4rem;
+  margin: 0;
+}
+
+.checkbox__fake {
+  position: absolute;
+  left: 0;
+  top: 0.25rem;
+  width: 1.3rem;
+  height: 1.3rem;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 240, 214, 0.3);
+  background: rgba(45, 22, 11, 0.3);
+  transition: border 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  pointer-events: none;
+}
+
+.checkbox input:checked + .checkbox__fake {
+  border-color: var(--sand-050);
+  background: var(--sand-050);
+}
+
+.checkbox input:checked + .checkbox__fake::after {
+  content: '';
+  position: absolute;
+  inset: 0.28rem;
+  background: linear-gradient(140deg, #3b1c0d, #5b3018);
+  clip-path: polygon(14% 52%, 0 66%, 43% 100%, 100% 16%, 86% 0, 40% 66%);
+}
+
+.checkbox input:focus-visible + .checkbox__fake {
+  box-shadow: 0 0 0 3px rgba(255, 240, 214, 0.3);
+}
+
+.checkbox__label {
+  display: block;
+}
+
+.auth-consent small {
+  color: var(--danger-primary);
+  font-weight: 600;
 }
 
 small {
   color: var(--danger-primary);
-  font-weight: 500;
+  font-weight: 600;
 }
 
 button {
-  border-radius: 0.85rem;
+  border-radius: 999px;
   border: none;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
-  color: #fffbe3;
-  font-weight: 600;
-  padding: 0.9rem 1.5rem;
+  background: linear-gradient(125deg, rgba(151, 143, 136, 0.85), rgba(123, 113, 106, 0.85));
+  color: var(--sand-050);
+  font-weight: 700;
+  padding: 0.95rem 1.6rem;
   cursor: pointer;
-  transition: transform 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 button:hover:enabled {
   transform: translateY(-2px);
+  box-shadow: 0 12px 30px -18px rgba(0, 0, 0, 0.6);
 }
 
 button:disabled {
-  opacity: 0.6;
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
@@ -207,46 +348,24 @@ button:disabled {
   margin: 0;
 }
 
-.auth-card footer {
-  color: var(--text-muted);
-}
-
-.auth-card footer a {
-  color: var(--accent-primary);
-}
-
-.auth-aside {
-  align-self: center;
-  padding-right: 3rem;
-  display: grid;
-  gap: 1.5rem;
-}
-
-.auth-aside h2 {
-  margin: 0;
-  font-size: 2rem;
-  letter-spacing: -0.03em;
-  color: var(--text-strong);
-}
-
-.auth-aside ul {
-  margin: 0;
-  padding-left: 1.25rem;
-  display: grid;
-  gap: 0.75rem;
-  color: var(--text-muted);
-  font-size: 1.05rem;
-  line-height: 1.5;
-}
-
-@media (max-width: 960px) {
-  .auth-layout {
-    grid-template-columns: minmax(0, 1fr);
+@media (max-width: 720px) {
+  .auth-brand {
+    position: static;
+    margin-bottom: 3rem;
   }
 
-  .auth-aside {
-    order: -1;
-    padding-right: 0;
+  .auth-screen {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 3.5rem 1rem 2rem;
+  }
+
+  .auth-panel {
+    padding: 2.5rem 2rem;
+  }
+
+  .checkbox__label {
+    margin-left: 1.5rem;
   }
 }
 </style>

@@ -31,30 +31,30 @@ const defaultConversations = (user) => {
   return [
     {
       id: `${user.id}-general`,
-      title: 'Stall Gossip',
-      description: 'Mainline feed for emergency TP calls and questionable rumors.',
+      title: 'Toaletní drby',
+      description: 'Hlavní kanál pro SOS volání po papíru a všechny podezřelé zvěsti.',
       participants: [user.id, 'helper-bot'],
       messages: [
         {
           id: `${user.id}-general-msg-1`,
           authorId: 'helper-bot',
-          authorName: 'Helper Bot',
-          body: `Welcome ${friendlyName}! Mind the puddles and announce your arrival.`,
+          authorName: 'Bot Uklízeč',
+          body: `Vítej ${friendlyName}! Dávej bacha na mokré fleky a ozvi se, až usedneš.`,
           timestamp: new Date().toISOString(),
         },
       ],
     },
     {
       id: `${user.id}-ideas`,
-      title: 'Tank Think Tank',
-      description: 'Swap renovation ideas, prank blueprints, and signature scents.',
+      title: 'Porcelánová laboratoř',
+      description: 'Sdílej nápady na vylepšení, prank plány i vlastní vůně svěžesti.',
       participants: [user.id, 'helper-bot'],
       messages: [
         {
           id: `${user.id}-ideas-msg-1`,
           authorId: 'helper-bot',
-          authorName: 'Helper Bot',
-          body: 'Pitch your boldest stall upgrades. Heated seats? Disco flush? Say less.',
+          authorName: 'Bot Uklízeč',
+          body: 'Pochlub se nejodvážnějšími úpravami kabinky. Vyhřívané prkýnko? Disco splachování? Sem s tím!',
           timestamp: new Date().toISOString(),
         },
       ],
@@ -71,11 +71,11 @@ const createMessage = ({ authorId, authorName, body }) => ({
 })
 
 const helperBotResponses = [
-  'Copy that. Spraying some air freshener on this take.',
-  'Legendary. Should I etch that on the bathroom wall for you?',
-  'Bold move. Want me to page the janitor squad?',
-  'That stinks in the best way possible. 10/10 would flush again.',
-  'Need cover? I can blame the smell on the upstairs pipes.',
+  'Rozumím. Přidávám k tomu šplích osvěžovače.',
+  'Legendární. Mám ti to vyrýt na dveře kabinky?',
+  'Odvážné. Mám zalarmovat úklidovou jednotku?',
+  'Voní to přesně tak, jak má. 10/10, opakoval bych.',
+  'Potřebuješ alibi? Klidně to hodím na stupačky z patra.',
 ]
 
 export const useChatStore = defineStore('chat', () => {
@@ -147,23 +147,23 @@ export const useChatStore = defineStore('chat', () => {
 
   const createConversation = ({ title, description }) => {
     if (!ownerId.value) {
-      throw new Error('No active user context for creating a conversation.')
+      throw new Error('Chybí přihlášený uživatel.')
     }
     const trimmedTitle = title.trim()
     if (!trimmedTitle) {
-      throw new Error('Conversation title is required.')
+      throw new Error('Název místnosti je povinný.')
     }
 
     const conversation = {
       id: `${ownerId.value}-${Date.now()}`,
       title: trimmedTitle,
-      description: description?.trim() || 'Freshly scrubbed secret stall',
+      description: description?.trim() || 'Zbrusu nová tajná kabinka',
       participants: [ownerId.value, 'helper-bot'],
       messages: [
         createMessage({
           authorId: 'helper-bot',
-          authorName: 'Helper Bot',
-          body: `Fresh porcelain who dis? ${trimmedTitle} is open for confessions.`,
+          authorName: 'Bot Uklízeč',
+          body: `Čerstvě naleštěný porcelán hlásí: ${trimmedTitle} je otevřená všem přiznáním.`,
         }),
       ],
     }
@@ -175,7 +175,7 @@ export const useChatStore = defineStore('chat', () => {
 
   const sendMessage = (body, author) => {
     if (!activeConversation.value) {
-      throw new Error('Pick a conversation before sending messages.')
+      throw new Error('Vyber nejdřív místnost, než něco pošleš.')
     }
     if (!body.trim()) {
       return null
@@ -200,7 +200,7 @@ export const useChatStore = defineStore('chat', () => {
     window.setTimeout(() => {
       const reply = createMessage({
         authorId: 'helper-bot',
-        authorName: 'Helper Bot',
+        authorName: 'Bot Uklízeč',
         body: helperBotResponses[Math.floor(Math.random() * helperBotResponses.length)],
       })
       conversation.messages.push(reply)

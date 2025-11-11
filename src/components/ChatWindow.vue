@@ -54,7 +54,7 @@ const handleKeydown = (event) => {
         <h2>{{ conversation.title }}</h2>
         <p>{{ conversation.description }}</p>
       </div>
-      <span class="participant-count">{{ conversation.participants.length }} stallmates</span>
+      <span class="participant-count">{{ conversation.participants.length }} členů kabinky</span>
     </header>
     <div ref="messageListRef" class="chat-window__messages">
       <article
@@ -66,23 +66,27 @@ const handleKeydown = (event) => {
         <header>
           <span class="author">{{ message.authorName }}</span>
           <time>{{ new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) }}</time>
-        </header>
-        <p>{{ message.body }}</p>
+    </header>
+    <p>{{ message.body }}</p>
       </article>
     </div>
     <form class="chat-window__composer" @submit.prevent="sendDraft">
       <textarea
         v-model="draft"
         rows="2"
-        placeholder="Drop a porcelain proclamation"
+        placeholder="Napiš, co se právě děje"
         @keydown="handleKeydown"
       ></textarea>
-      <button type="submit" :disabled="!draft.trim()">Flush</button>
+      <button type="submit" :disabled="!draft.trim()">Odeslat</button>
     </form>
   </section>
   <section v-else class="chat-window chat-window--empty">
-    <h2>Select a stall to get started</h2>
-    <p>Crack open a new porcelain palace or slide into an existing gossip loop.</p>
+
+      textarea::placeholder {
+        color: rgba(58, 36, 20, 0.55);
+      }
+    <h2>Vyber místnost</h2>
+    <p>Vytvoř novou kabinku nebo se připoj k té, kde to právě bublá.</p>
   </section>
 </template>
 
@@ -90,9 +94,9 @@ const handleKeydown = (event) => {
 .chat-window {
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
-  background: var(--surface-primary);
-  border-radius: 1.5rem;
-  box-shadow: var(--shadow-soft);
+  background: linear-gradient(180deg, rgba(250, 220, 165, 0.94), rgba(249, 228, 193, 0.92));
+  border-radius: 2.25rem;
+  box-shadow: 0 38px 120px -60px rgba(0, 0, 0, 0.6);
   overflow: hidden;
 }
 
@@ -100,50 +104,54 @@ const handleKeydown = (event) => {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem;
-  border-bottom: 1px solid var(--border-subtle);
-  background: var(--surface-panel);
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid rgba(58, 36, 20, 0.08);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 .chat-window__header h2 {
   margin: 0;
-  color: var(--text-strong);
-  letter-spacing: -0.02em;
+  color: #3b1c0d;
+  letter-spacing: 0.02em;
 }
 
 .chat-window__header p {
   margin: 0.35rem 0 0;
-  color: var(--text-muted);
+  color: rgba(58, 36, 20, 0.7);
 }
 
 .participant-count {
   font-size: 0.85rem;
-  color: var(--text-subtle);
+  color: rgba(58, 36, 20, 0.65);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .chat-window__messages {
-  padding: 1.5rem;
+  padding: 2rem;
   overflow-y: auto;
   display: grid;
   gap: 1rem;
-  background: linear-gradient(180deg, rgba(205, 140, 67, 0.12), transparent 120%);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 .chat-message {
   max-width: 70%;
-  background: var(--surface-panel);
-  border-radius: 1rem;
-  border: 1px solid var(--border-subtle);
-  padding: 0.85rem 1rem;
+  background: rgba(186, 180, 172, 0.85);
+  border-radius: 1.4rem;
+  border: 1px solid transparent;
+  padding: 1rem 1.2rem;
   display: grid;
   gap: 0.35rem;
-  color: var(--text-strong);
+  color: #312115;
 }
 
 .chat-message.outgoing {
   margin-left: auto;
-  background: linear-gradient(135deg, rgba(196, 115, 47, 0.35), rgba(139, 79, 31, 0.3));
-  border-color: transparent;
+  background: rgba(246, 183, 104, 0.92);
+  color: #2f1608;
+  border-color: rgba(58, 36, 20, 0.08);
+  box-shadow: 0 12px 28px -20px rgba(58, 36, 20, 0.6);
 }
 
 .chat-message header {
@@ -152,7 +160,7 @@ const handleKeydown = (event) => {
   font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--text-subtle);
+  color: rgba(58, 36, 20, 0.7);
 }
 
 .chat-message p {
@@ -164,36 +172,42 @@ const handleKeydown = (event) => {
 .chat-window__composer {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1rem;
-  padding: 1.25rem 1.5rem;
-  border-top: 1px solid var(--border-subtle);
-  background: var(--surface-panel);
+  gap: 1.1rem;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid rgba(58, 36, 20, 0.08);
+  background: rgba(255, 255, 255, 0.45);
 }
 
 textarea {
   resize: none;
-  border-radius: 1rem;
-  border: 1px solid var(--border-subtle);
-  padding: 0.9rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(58, 36, 20, 0.16);
+  padding: 1rem 1.4rem;
   font-size: 1rem;
-  background: var(--surface-primary);
-  color: var(--text-strong);
+  background: rgba(255, 255, 255, 0.8);
+  color: #3b1c0d;
   line-height: 1.5;
 }
 
+textarea::placeholder {
+  color: rgba(58, 36, 20, 0.55);
+}
+
 textarea:focus {
-  outline: 3px solid rgba(196, 115, 47, 0.25);
-  border-color: var(--accent-primary);
+  outline: none;
+  border-color: rgba(58, 36, 20, 0.38);
 }
 
 button {
   border-radius: 999px;
   border: none;
-  padding: 0.75rem 1.75rem;
-  font-weight: 600;
+  padding: 0.85rem 2.1rem;
+  font-weight: 700;
   cursor: pointer;
-  color: #fffbe3;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: var(--sand-050);
+  background: linear-gradient(125deg, rgba(151, 143, 136, 0.85), rgba(123, 113, 106, 0.85));
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
   transition: transform 0.2s ease;
 }
 
@@ -210,7 +224,8 @@ button:hover:enabled {
   place-items: center;
   text-align: center;
   padding: 6rem 2rem;
-  color: var(--text-muted);
-  border: 2px dashed var(--border-subtle);
+  color: rgba(255, 255, 255, 0.75);
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  background: rgba(42, 20, 8, 0.4);
 }
 </style>

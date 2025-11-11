@@ -40,7 +40,7 @@ const handleCreateConversation = () => {
       closeCreateModal()
     }
   } catch (error) {
-    createError.value = error.message || 'Unable to prep that stall.'
+    createError.value = error.message || 'Místnost se nepodařilo založit.'
   }
 }
 
@@ -69,22 +69,22 @@ const handleSendMessage = (body) => {
     <div v-if="showCreateModal" class="modal-backdrop" @click.self="closeCreateModal">
       <section class="modal">
         <header>
-          <h2>New stall</h2>
-          <p>Name your next porcelain hangout and invite the crew to overshare.</p>
+          <h2>Nová místnost</h2>
+          <p>Pojmenuj čerstvě vyleštěnou kabinku a pozvi posádku ke sdílení.</p>
         </header>
         <form @submit.prevent="handleCreateConversation">
           <label>
-            <span>Stall name</span>
-            <input v-model="createForm.title" type="text" placeholder="Midnight flush circle" />
+            <span>Název místnosti</span>
+            <input v-model="createForm.title" type="text" placeholder="Noční splachovací kruh" />
           </label>
           <label>
-            <span>Description</span>
-            <textarea v-model="createForm.description" rows="3" placeholder="Plotting the great flush heist"></textarea>
+            <span>Popis</span>
+            <textarea v-model="createForm.description" rows="3" placeholder="Plánujeme velkou splachovací loupež"></textarea>
           </label>
           <p v-if="createError" class="error">{{ createError }}</p>
           <footer>
-            <button type="button" class="ghost" @click="closeCreateModal">Maybe later</button>
-            <button type="submit">Install stall</button>
+            <button type="button" class="ghost" @click="closeCreateModal">Možná později</button>
+            <button type="submit">Založit místnost</button>
           </footer>
         </form>
       </section>
@@ -94,15 +94,22 @@ const handleSendMessage = (body) => {
 
 <style scoped>
 .chat-layout {
+  position: relative;
+  flex: 1;
   display: grid;
   grid-template-columns: 320px minmax(0, 1fr);
-  min-height: calc(100vh - 5rem);
+  gap: 1.75rem;
+  padding: 2.5rem 2.5rem 3rem;
+  width: min(1120px, 100%);
+  margin: 0 auto;
+  align-items: stretch;
+  min-height: calc(100vh - 5.5rem);
 }
 
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(58, 36, 20, 0.6);
+  background: rgba(22, 11, 6, 0.72);
   display: grid;
   place-items: center;
   padding: 2rem;
@@ -111,18 +118,18 @@ const handleSendMessage = (body) => {
 
 .modal {
   width: min(480px, 100%);
-  background: linear-gradient(180deg, rgba(220, 168, 101, 0.18), transparent), var(--surface-primary);
-  border-radius: 1.25rem;
-  border: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-soft);
-  padding: 2rem;
+  background: rgba(42, 20, 8, 0.92);
+  border-radius: 1.75rem;
+  border: 1px solid rgba(255, 240, 214, 0.18);
+  box-shadow: 0 38px 120px -50px rgba(0, 0, 0, 0.65);
+  padding: 2.25rem;
   display: grid;
   gap: 1.5rem;
 }
 
 .modal header h2 {
   margin: 0;
-  color: var(--text-strong);
+  color: var(--sand-050);
 }
 
 .modal header p {
@@ -138,18 +145,22 @@ form {
 label {
   display: grid;
   gap: 0.4rem;
-  color: var(--text-strong);
+  color: var(--sand-100);
   font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
 }
 
 input,
 textarea {
-  border-radius: 0.9rem;
-  border: 1px solid var(--border-subtle);
-  padding: 0.85rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(255, 240, 214, 0.16);
+  padding: 0.9rem 1.1rem;
   font-size: 1rem;
-  background: var(--surface-panel);
-  color: var(--text-strong);
+  background: rgba(132, 118, 109, 0.5);
+  color: var(--sand-050);
+  transition: border 0.2s ease, background 0.2s ease;
 }
 
 textarea {
@@ -158,8 +169,9 @@ textarea {
 
 input:focus,
 textarea:focus {
-  outline: 3px solid rgba(196, 115, 47, 0.25);
-  border-color: var(--accent-primary);
+  outline: none;
+  border-color: rgba(255, 240, 214, 0.42);
+  background: rgba(149, 132, 121, 0.6);
 }
 
 footer {
@@ -170,18 +182,20 @@ footer {
 
 button {
   border-radius: 999px;
-  padding: 0.75rem 1.6rem;
-  font-weight: 600;
+  padding: 0.8rem 1.8rem;
+  font-weight: 700;
   cursor: pointer;
   border: none;
-  color: #fffbe3;
-  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  color: var(--sand-050);
+  background: linear-gradient(125deg, rgba(151, 143, 136, 0.85), rgba(123, 113, 106, 0.85));
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 button.ghost {
   background: transparent;
-  border: 1px solid var(--border-strong);
-  color: var(--text-strong);
+  border: 1px solid rgba(255, 240, 214, 0.24);
+  color: var(--sand-100);
 }
 
 .error {
@@ -193,12 +207,14 @@ button.ghost {
 @media (max-width: 1024px) {
   .chat-layout {
     grid-template-columns: 280px minmax(0, 1fr);
+    padding: 2.25rem 1.75rem;
   }
 }
 
 @media (max-width: 860px) {
   .chat-layout {
     grid-template-columns: minmax(0, 1fr);
+    padding: 2rem 1.25rem;
   }
 
   .chat-layout :deep(.sidebar) {

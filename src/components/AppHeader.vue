@@ -28,20 +28,23 @@ const handleLogout = () => {
 <template>
   <header class="app-header">
     <router-link class="brand" :to="{ name: 'chat' }">
-      <span class="brand__title">ShitPostr</span>
-      <span class="brand__tagline">Live from the porcelain pipeline</span>
+      <span class="brand__badge">SP</span>
+      <span class="brand__copy">
+        <span class="brand__title">ShitPostr</span>
+        <span class="brand__tagline">Porcelánová linka živě</span>
+      </span>
     </router-link>
     <nav class="app-nav">
-      <router-link :to="{ name: 'chat' }">Toilet Talk</router-link>
-      <router-link :to="{ name: 'profile' }">Stall Settings</router-link>
+      <router-link :to="{ name: 'chat' }">Místnosti</router-link>
+      <router-link :to="{ name: 'profile' }">Profil</router-link>
     </nav>
     <div class="user-panel" v-if="user">
       <div class="avatar" :style="{ backgroundColor: user.avatarColor }">{{ initials }}</div>
       <div class="identity">
         <span class="name">{{ user.displayName }}</span>
-        <span class="status">{{ user.statusMessage || 'On the throne' }}</span>
+        <span class="status">{{ user.statusMessage || 'Na trůně' }}</span>
       </div>
-      <button class="ghost" type="button" @click="handleLogout">Log out</button>
+      <button class="ghost" type="button" @click="handleLogout">Odhlásit se</button>
     </div>
   </header>
 </template>
@@ -52,9 +55,9 @@ const handleLogout = () => {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.75rem 2rem;
-  border-bottom: 1px solid var(--border-subtle);
-  background: var(--surface-primary);
+  padding: 1.1rem 2.25rem;
+  border-bottom: 1px solid rgba(255, 240, 214, 0.08);
+  background: linear-gradient(180deg, rgba(75, 38, 20, 0.88), rgba(43, 20, 8, 0.92));
   position: sticky;
   top: 0;
   z-index: 10;
@@ -62,15 +65,35 @@ const handleLogout = () => {
 
 .brand {
   display: flex;
-  flex-direction: column;
-  color: var(--text-strong);
+  align-items: center;
+  gap: 0.75rem;
+  color: var(--text-primary);
   text-decoration: none;
 }
 
+.brand__badge {
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: rgba(255, 236, 206, 0.12);
+  border: 1px solid rgba(255, 236, 206, 0.24);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.brand__copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
 .brand__title {
-  font-size: 1.35rem;
-  font-weight: 800;
-  letter-spacing: -0.03em;
+  font-family: 'Pacifico', cursive;
+  font-size: 1.75rem;
+  letter-spacing: 0.04em;
 }
 
 .brand__tagline {
@@ -80,16 +103,19 @@ const handleLogout = () => {
 
 .app-nav {
   display: flex;
-  gap: 1.25rem;
-  font-weight: 500;
+  gap: 1.5rem;
+  font-weight: 600;
 }
 
 .app-nav a {
-  color: var(--text-muted);
+  color: var(--text-subtle);
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
 }
 
 .app-nav a.router-link-active {
-  color: var(--accent-primary);
+  color: var(--sand-050);
 }
 
 .user-panel {
@@ -105,9 +131,10 @@ const handleLogout = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: var(--text-primary);
   font-weight: 600;
   letter-spacing: 0.02em;
+  border: 1px solid rgba(255, 240, 214, 0.24);
 }
 
 .identity {
@@ -117,7 +144,7 @@ const handleLogout = () => {
 }
 
 .name {
-  color: var(--text-strong);
+  color: var(--sand-050);
   font-size: 0.95rem;
 }
 
@@ -127,16 +154,19 @@ const handleLogout = () => {
 }
 
 button.ghost {
-  border: 1px solid var(--border-strong);
-  background: transparent;
-  color: var(--text-strong);
-  padding: 0.4rem 0.75rem;
+  border: 1px solid rgba(255, 240, 214, 0.24);
+  background: rgba(255, 240, 214, 0.06);
+  color: var(--text-primary);
+  padding: 0.55rem 1.1rem;
   border-radius: 999px;
-  font-weight: 500;
-  transition: all 0.15s ease-in-out;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
 }
 button.ghost:hover {
-  border-color: var(--accent-primary);
-  color: var(--accent-primary);
+  border-color: rgba(255, 240, 214, 0.6);
+  background: rgba(255, 240, 214, 0.18);
+  color: var(--sand-050);
 }
 </style>

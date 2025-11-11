@@ -38,11 +38,11 @@ const handleCreate = () => {
 <template>
   <aside class="sidebar">
     <div class="sidebar__header">
-      <h2>Stalls</h2>
-      <button type="button" class="pill" @click="handleCreate">+ New stall</button>
+      <h2>Místnosti</h2>
+      <button type="button" class="pill" @click="handleCreate">+ Nová místnost</button>
     </div>
     <div class="sidebar__search">
-      <input v-model="query" type="search" placeholder="Sniff out a stall" />
+      <input v-model="query" type="search" placeholder="Hledat místnost" />
     </div>
     <div class="sidebar__list" v-if="filteredConversations.length">
       <button
@@ -53,32 +53,38 @@ const handleCreate = () => {
         :class="{ active: conversation.id === activeId }"
         @click="handleSelect(conversation.id)"
       >
-        <div class="conversation__title">{{ conversation.title }}</div>
-        <p class="conversation__meta">{{ conversation.description }}</p>
-        <p
-          v-if="conversation.messages && conversation.messages.length"
-          class="conversation__preview"
-        >
-          {{ conversation.messages[conversation.messages.length - 1].authorName }}:
-          <span>{{ conversation.messages[conversation.messages.length - 1].body }}</span>
-        </p>
+        <span class="conversation__avatar">{{ conversation.title ? conversation.title.charAt(0).toUpperCase() : '?' }}</span>
+        <span class="conversation__content">
+          <span class="conversation__title">{{ conversation.title }}</span>
+          <p class="conversation__meta">{{ conversation.description }}</p>
+          <p
+            v-if="conversation.messages && conversation.messages.length"
+            class="conversation__preview"
+          >
+            {{ conversation.messages[conversation.messages.length - 1].authorName }}:
+            <span>{{ conversation.messages[conversation.messages.length - 1].body }}</span>
+          </p>
+        </span>
       </button>
     </div>
     <div class="sidebar__empty" v-else>
-      <p>No stalls matched. Crack open a fresh porcelain palace!</p>
-      <button type="button" class="pill" @click="handleCreate">Start a stall</button>
+      <p>Nenašli jsme žádnou místnost. Založ novou kabinku!</p>
+      <button type="button" class="pill" @click="handleCreate">Založit místnost</button>
     </div>
   </aside>
 </template>
 
 <style scoped>
 .sidebar {
+  height: 100%;
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr);
-  gap: 1rem;
-  background: var(--surface-panel);
-  border-right: 1px solid var(--border-subtle);
-  padding: 1.5rem 1.25rem;
+  gap: 1.25rem;
+  background: rgba(250, 220, 165, 0.82);
+  border-radius: 2rem;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid rgba(43, 20, 8, 0.12);
+  box-shadow: 0 32px 90px -60px rgba(0, 0, 0, 0.6);
 }
 
 .sidebar__header {
@@ -89,78 +95,102 @@ const handleCreate = () => {
 
 .sidebar__header h2 {
   margin: 0;
-  font-size: 1.1rem;
-  letter-spacing: -0.01em;
-  color: var(--text-strong);
+  font-size: 1.2rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #3b1c0d;
 }
 
 .pill {
-  padding: 0.45rem 0.95rem;
+  padding: 0.5rem 1rem;
   border-radius: 999px;
-  border: 1px solid var(--border-strong);
-  background: transparent;
-  color: var(--text-strong);
-  font-weight: 600;
+  border: 1px solid rgba(58, 36, 20, 0.2);
+  background: rgba(255, 255, 255, 0.45);
+  color: #3b1c0d;
+  font-weight: 700;
   cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
 
 .sidebar__search input {
   width: 100%;
-  padding: 0.65rem 0.85rem;
-  border-radius: 0.75rem;
-  border: 1px solid var(--border-subtle);
-  background: var(--surface-primary);
-  color: var(--text-strong);
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(58, 36, 20, 0.18);
+  background: rgba(255, 255, 255, 0.55);
+  color: #3b1c0d;
+  font-weight: 500;
 }
 
 .sidebar__list {
   overflow-y: auto;
   display: grid;
-  gap: 0.75rem;
+  gap: 0.9rem;
 }
 
 .conversation {
   display: grid;
-  gap: 0.35rem;
-  padding: 0.9rem 0.75rem;
+  grid-template-columns: auto 1fr;
+  gap: 0.85rem;
+  padding: 0.85rem 0.9rem;
   text-align: left;
-  border-radius: 1rem;
-  border: 1px solid transparent;
-  background: transparent;
-  color: inherit;
-  transition: border 0.2s ease, background 0.2s ease;
+  border-radius: 1.4rem;
+  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.45);
+  color: #3b1c0d;
+  transition: transform 0.2s ease, border 0.2s ease, background 0.2s ease;
   cursor: pointer;
 }
 
 .conversation:hover {
-  border-color: var(--border-subtle);
-  background: rgba(196, 115, 47, 0.08);
+  transform: translateY(-2px);
+  border-color: rgba(58, 36, 20, 0.26);
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .conversation.active {
-  border-color: var(--accent-primary);
-  background: rgba(196, 115, 47, 0.18);
+  border-color: rgba(58, 36, 20, 0.65);
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.conversation__avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(58, 36, 20, 0.85);
+  color: var(--sand-050);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.08em;
+}
+
+.conversation__content {
+  display: grid;
+  gap: 0.3rem;
 }
 
 .conversation__title {
-  font-weight: 600;
-  color: var(--text-strong);
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .conversation__meta {
-  color: var(--text-subtle);
+  color: rgba(58, 36, 20, 0.7);
   font-size: 0.85rem;
   margin: 0;
 }
 
 .conversation__preview {
-  color: var(--text-muted);
+  color: rgba(58, 36, 20, 0.72);
   font-size: 0.85rem;
   margin: 0;
 }
 
 .conversation__preview span {
-  color: var(--text-subtle);
+  color: rgba(58, 36, 20, 0.72);
 }
 
 .sidebar__empty {
@@ -168,6 +198,6 @@ const handleCreate = () => {
   text-align: center;
   display: grid;
   gap: 0.75rem;
-  color: var(--text-muted);
+  color: rgba(58, 36, 20, 0.7);
 }
 </style>
