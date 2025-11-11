@@ -7,20 +7,59 @@ const authStore = useAuthStore()
 const form = reactive({
   displayName: authStore.currentUser?.displayName ?? '',
   statusMessage: authStore.currentUser?.statusMessage ?? '',
+  avatarUrl: authStore.currentUser?.avatarUrl ?? null,
 })
 
 const saving = ref(false)
 const feedback = ref('')
 const errorMessage = ref('')
+const avatarPreview = ref(authStore.currentUser?.avatarUrl ?? null)
+const fileInput = ref(null)
 
 watch(
   () => authStore.currentUser,
   (user) => {
     form.displayName = user?.displayName ?? ''
     form.statusMessage = user?.statusMessage ?? ''
+    form.avatarUrl = user?.avatarUrl ?? null
+    avatarPreview.value = user?.avatarUrl ?? null
   },
   { immediate: true },
 )
+
+const handleFileSelect = (event) => {
+  const file = event.target.files?.[0]
+  if (!file) return
+
+  if (!file.type.startsWith('image/')) {
+    errorMessage.value = 'Vyber prosím obrázek.'
+    return
+  }
+
+  if (file.size > 5 * 1024 * 1024) {
+    errorMessage.value = 'Obrázek je příliš velký. Maximálně 5MB.'
+    return
+  }
+
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    avatarPreview.value = e.target.result
+    form.avatarUrl = e.target.result
+    errorMessage.value = ''
+  }
+  reader.onerror = () => {
+    errorMessage.value = 'Nepodařilo se načíst obrázek.'
+  }
+  reader.readAsDataURL(file)
+}
+
+const removeAvatar = () => {
+  form.avatarUrl = null
+  avatarPreview.value = null
+  if (fileInput.value) {
+    fileInput.value.value = ''
+  }
+}
 
 const handleSubmit = async () => {
   if (!form.displayName.trim()) {
@@ -34,6 +73,7 @@ const handleSubmit = async () => {
     await authStore.updateProfile({
       displayName: form.displayName,
       statusMessage: form.statusMessage,
+      avatarUrl: form.avatarUrl,
     })
     feedback.value = 'Profil se povedlo uložit.'
   } catch (error) {
@@ -51,6 +91,29 @@ const handleSubmit = async () => {
       <p>Pojmenuj trůn, dolad status a dej kabince vědět, kdo tady vládne.</p>
     </header>
     <form @submit.prevent="handleSubmit">
+      <div class="form-field">
+        <span class="field-label">Profilovka</span>
+        <div class="avatar-upload">
+          <div class="avatar-preview">
+            <img v-if="avatarPreview" :src="avatarPreview" alt="Profilovka" />
+            <div v-else class="avatar-placeholder">Žádná profilovka</div>
+          </div>
+          <div class="avatar-controls">
+            <input
+              ref="fileInput"
+              type="file"
+              accept="image/*"
+              @change="handleFileSelect"
+              style="display: none"
+              id="avatar-input"
+            />
+            <label for="avatar-input" class="btn-upload">Vybrat obrázek</label>
+            <button v-if="avatarPreview" type="button" class="btn-remove" @click="removeAvatar">
+              Odstranit
+            </button>
+          </div>
+        </div>
+      </div>
       <label>
         <span>Přezdívka</span>
         <input v-model="form.displayName" type="text" autocomplete="nickname" />
@@ -100,9 +163,18 @@ form {
   box-shadow: 0 34px 120px -60px rgba(0, 0, 0, 0.6);
 }
 
-label {
+label,
+.form-field {
   display: grid;
   gap: 0.5rem;
+  color: var(--sand-100);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.field-label {
   color: var(--sand-100);
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -168,5 +240,72 @@ button:disabled {
 
 button:hover:enabled {
   transform: translateY(-2px);
+}
+
+.avatar-upload {
+  display: grid;
+  gap: 1rem;
+}
+
+.avatar-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid rgba(255, 240, 214, 0.24);
+  background: rgba(132, 118, 109, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  color: var(--text-subtle);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.avatar-controls {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-upload,
+.btn-remove {
+  padding: 0.65rem 1.2rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 240, 214, 0.24);
+  background: rgba(255, 240, 214, 0.08);
+  color: var(--sand-050);
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.85rem;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-upload:hover {
+  background: rgba(255, 240, 214, 0.18);
+  border-color: rgba(255, 240, 214, 0.4);
+}
+
+.btn-remove {
+  background: rgba(220, 53, 69, 0.2);
+  border-color: rgba(220, 53, 69, 0.4);
+  color: #ff6b7a;
+}
+
+.btn-remove:hover {
+  background: rgba(220, 53, 69, 0.3);
+  border-color: rgba(220, 53, 69, 0.6);
 }
 </style>

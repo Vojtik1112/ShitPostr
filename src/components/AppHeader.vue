@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import logo from '../assets/Shitpostrlogo.png'
 
 const authStore = useAuthStore()
 const router = useRouter()
@@ -28,10 +29,9 @@ const handleLogout = () => {
 <template>
   <header class="app-header">
     <router-link class="brand" :to="{ name: 'chat' }">
-      <span class="brand__badge">SP</span>
+      <img :src="logo" alt="ShitPostr" class="brand__logo" />
       <span class="brand__copy">
         <span class="brand__title">ShitPostr</span>
-        <span class="brand__tagline">Porcelánová linka živě</span>
       </span>
     </router-link>
     <nav class="app-nav">
@@ -39,7 +39,10 @@ const handleLogout = () => {
       <router-link :to="{ name: 'profile' }">Profil</router-link>
     </nav>
     <div class="user-panel" v-if="user">
-      <div class="avatar" :style="{ backgroundColor: user.avatarColor }">{{ initials }}</div>
+      <div class="avatar" :style="{ backgroundColor: user.avatarColor }">
+        <img v-if="user.avatarUrl" :src="user.avatarUrl" alt="Profilovka" />
+        <span v-else>{{ initials }}</span>
+      </div>
       <div class="identity">
         <span class="name">{{ user.displayName }}</span>
         <span class="status">{{ user.statusMessage || 'Na trůně' }}</span>
@@ -66,22 +69,16 @@ const handleLogout = () => {
 .brand {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   color: var(--text-primary);
   text-decoration: none;
 }
 
-.brand__badge {
-  width: 46px;
-  height: 46px;
-  border-radius: 999px;
-  background: rgba(255, 236, 206, 0.12);
-  border: 1px solid rgba(255, 236, 206, 0.24);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+.brand__logo {
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+  display: block;
 }
 
 .brand__copy {
@@ -135,6 +132,14 @@ const handleLogout = () => {
   font-weight: 600;
   letter-spacing: 0.02em;
   border: 1px solid rgba(255, 240, 214, 0.24);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .identity {

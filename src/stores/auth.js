@@ -157,6 +157,7 @@ export const useAuthStore = defineStore('auth', () => {
       ...users.value[index],
       displayName: payload.displayName?.trim() || users.value[index].displayName,
       statusMessage: payload.statusMessage?.trim() ?? users.value[index].statusMessage,
+      avatarUrl: payload.avatarUrl !== undefined ? payload.avatarUrl : users.value[index].avatarUrl,
     }
 
     users.value.splice(index, 1, updated)

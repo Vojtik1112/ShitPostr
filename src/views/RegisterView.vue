@@ -2,6 +2,7 @@
 import { reactive, ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth'
+import logo from '../assets/Shitpostrlogo.png'
 
 const router = useRouter()
 const authStore = useAuthStore()
@@ -82,7 +83,7 @@ const handleSubmit = async () => {
 <template>
   <div class="auth-screen">
     <RouterLink class="auth-brand" :to="{ name: 'welcome' }">
-      <span class="auth-brand__badge">SP</span>
+      <img :src="logo" alt="ShitPostr" class="auth-brand__logo" />
       <span class="auth-brand__text">ShitPostr</span>
     </RouterLink>
 
@@ -158,21 +159,15 @@ const handleSubmit = async () => {
   left: 3rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   color: var(--sand-050);
 }
 
-.auth-brand__badge {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: rgba(255, 240, 214, 0.1);
-  border: 1px solid rgba(255, 240, 214, 0.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+.auth-brand__logo {
+  width: 128px;
+  height: 128px;
+  object-fit: contain;
+  display: block;
 }
 
 .auth-brand__text {
