@@ -64,6 +64,8 @@ const handleLogout = () => {
   position: sticky;
   top: 0;
   z-index: 10;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .brand {
@@ -72,6 +74,7 @@ const handleLogout = () => {
   gap: 0.5rem;
   color: var(--text-primary);
   text-decoration: none;
+  flex-shrink: 0;
 }
 
 .brand__logo {
@@ -102,6 +105,7 @@ const handleLogout = () => {
   display: flex;
   gap: 1.5rem;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .app-nav a {
@@ -119,6 +123,8 @@ const handleLogout = () => {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  min-width: 0;
+  flex: 0 1 auto;
 }
 
 .avatar {
@@ -146,16 +152,27 @@ const handleLogout = () => {
   display: flex;
   flex-direction: column;
   line-height: 1.1;
+  min-width: 0;
+  flex: 1 1 auto;
+  max-width: 200px;
 }
 
 .name {
   color: var(--sand-050);
   font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .status {
   color: var(--text-subtle);
   font-size: 0.8rem;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.2;
+  max-width: 100%;
 }
 
 button.ghost {
@@ -168,6 +185,8 @@ button.ghost {
   text-transform: uppercase;
   letter-spacing: 0.12em;
   transition: background 0.15s ease-in-out, color 0.15s ease-in-out;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 button.ghost:hover {
   border-color: rgba(255, 240, 214, 0.6);

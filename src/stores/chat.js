@@ -106,9 +106,8 @@ export const useChatStore = defineStore('chat', () => {
       conversations.value = stored.conversations
       activeConversationId.value = stored.activeConversationId || stored.conversations[0]?.id || null
     } else {
-      const fallback = defaultConversations(user)
-      conversations.value = fallback
-      activeConversationId.value = fallback[0]?.id || null
+      conversations.value = []
+      activeConversationId.value = null
       persist()
     }
 
@@ -153,11 +152,19 @@ export const useChatStore = defineStore('chat', () => {
     if (!trimmedTitle) {
       throw new Error('Název místnosti je povinný.')
     }
+    if (trimmedTitle.length > 30) {
+      throw new Error('Název místnosti může mít maximálně 30 znaků.')
+    }
+    
+    const trimmedDescription = description?.trim() || ''
+    if (trimmedDescription.length > 200) {
+      throw new Error('Popis může mít maximálně 200 znaků.')
+    }
 
     const conversation = {
       id: `${ownerId.value}-${Date.now()}`,
       title: trimmedTitle,
-      description: description?.trim() || 'Zbrusu nová tajná kabinka',
+      description: trimmedDescription || 'Zbrusu nová tajná kabinka',
       participants: [ownerId.value, 'helper-bot'],
       messages: [
         createMessage({

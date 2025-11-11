@@ -75,11 +75,13 @@ const handleSendMessage = (body) => {
         <form @submit.prevent="handleCreateConversation">
           <label>
             <span>Název místnosti</span>
-            <input v-model="createForm.title" type="text" placeholder="Noční splachovací kruh" />
+            <input v-model="createForm.title" type="text" placeholder="Noční splachovací kruh" maxlength="30" />
+            <small v-if="createForm.title.length > 0" class="char-count">{{ createForm.title.length }}/30</small>
           </label>
           <label>
             <span>Popis</span>
-            <textarea v-model="createForm.description" rows="3" placeholder="Plánujeme velkou splachovací loupež"></textarea>
+            <textarea v-model="createForm.description" rows="3" placeholder="Plánujeme velkou splachovací loupež" maxlength="200"></textarea>
+            <small v-if="createForm.description.length > 0" class="char-count">{{ createForm.description.length }}/200</small>
           </label>
           <p v-if="createError" class="error">{{ createError }}</p>
           <footer>
@@ -202,6 +204,15 @@ button.ghost {
   color: var(--danger-primary);
   font-weight: 600;
   margin: 0;
+}
+
+.char-count {
+  color: var(--text-subtle);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: 0.25rem;
 }
 
 @media (max-width: 1024px) {

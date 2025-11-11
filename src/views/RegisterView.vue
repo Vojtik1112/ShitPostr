@@ -96,7 +96,8 @@ const handleSubmit = async () => {
       <form class="auth-form" @submit.prevent="handleSubmit">
         <label>
           <span>Uživatelské jméno</span>
-          <input v-model="form.displayName" type="text" autocomplete="nickname" placeholder="Král Kohoutku" />
+          <input v-model="form.displayName" type="text" autocomplete="nickname" placeholder="Král Kohoutku" maxlength="30" />
+          <small v-if="form.displayName.length > 0" class="char-count">{{ form.displayName.length }}/30</small>
           <small v-if="fieldErrors.displayName">{{ fieldErrors.displayName }}</small>
         </label>
         <label>
@@ -312,6 +313,15 @@ input[type='password']:focus {
 small {
   color: var(--danger-primary);
   font-weight: 600;
+}
+
+.char-count {
+  color: var(--text-subtle);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: 0.25rem;
 }
 
 button {

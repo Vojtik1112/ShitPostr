@@ -86,6 +86,9 @@ export const useAuthStore = defineStore('auth', () => {
     if (!display) {
       throw new Error('Přezdívka je povinná.')
     }
+    if (display.length > 30) {
+      throw new Error('Přezdívka může mít maximálně 30 znaků.')
+    }
     if (!normalisedEmail) {
       throw new Error('E-mail je povinný.')
     }
@@ -153,10 +156,20 @@ export const useAuthStore = defineStore('auth', () => {
       throw new Error('Profil jsme nenašli.')
     }
 
+    const trimmedDisplayName = payload.displayName?.trim() || ''
+    if (trimmedDisplayName && trimmedDisplayName.length > 30) {
+      throw new Error('Přezdívka může mít maximálně 30 znaků.')
+    }
+
+    const trimmedStatusMessage = payload.statusMessage?.trim() ?? ''
+    if (trimmedStatusMessage && trimmedStatusMessage.length > 200) {
+      throw new Error('Status může mít maximálně 200 znaků.')
+    }
+
     const updated = {
       ...users.value[index],
-      displayName: payload.displayName?.trim() || users.value[index].displayName,
-      statusMessage: payload.statusMessage?.trim() ?? users.value[index].statusMessage,
+      displayName: trimmedDisplayName || users.value[index].displayName,
+      statusMessage: trimmedStatusMessage || users.value[index].statusMessage,
       avatarUrl: payload.avatarUrl !== undefined ? payload.avatarUrl : users.value[index].avatarUrl,
     }
 

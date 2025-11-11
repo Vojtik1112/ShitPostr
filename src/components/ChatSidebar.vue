@@ -85,6 +85,8 @@ const handleCreate = () => {
   padding: 1.75rem 1.5rem;
   border: 1px solid rgba(43, 20, 8, 0.12);
   box-shadow: 0 32px 90px -60px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+  min-width: 0;
 }
 
 .sidebar__header {
@@ -141,6 +143,8 @@ const handleCreate = () => {
   color: #3b1c0d;
   transition: transform 0.2s ease, border 0.2s ease, background 0.2s ease;
   cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .conversation:hover {
@@ -165,32 +169,49 @@ const handleCreate = () => {
   align-items: center;
   justify-content: center;
   letter-spacing: 0.08em;
+  flex-shrink: 0;
 }
 
 .conversation__content {
   display: grid;
   gap: 0.3rem;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .conversation__title {
   font-weight: 700;
   letter-spacing: 0.02em;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.3;
 }
 
 .conversation__meta {
   color: rgba(58, 36, 20, 0.7);
   font-size: 0.85rem;
   margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.3;
 }
 
 .conversation__preview {
   color: rgba(58, 36, 20, 0.72);
   font-size: 0.85rem;
   margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.3;
 }
 
 .conversation__preview span {
   color: rgba(58, 36, 20, 0.72);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .sidebar__empty {

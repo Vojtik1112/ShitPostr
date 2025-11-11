@@ -116,11 +116,13 @@ const handleSubmit = async () => {
       </div>
       <label>
         <span>Přezdívka</span>
-        <input v-model="form.displayName" type="text" autocomplete="nickname" />
+        <input v-model="form.displayName" type="text" autocomplete="nickname" maxlength="30" />
+        <small v-if="form.displayName.length > 0" class="char-count">{{ form.displayName.length }}/30</small>
       </label>
       <label>
         <span>Status</span>
-        <textarea v-model="form.statusMessage" rows="3" placeholder="Zanech zprávu u zrcadla" />
+        <textarea v-model="form.statusMessage" rows="3" placeholder="Zanech zprávu u zrcadla" maxlength="200"></textarea>
+        <small v-if="form.statusMessage.length > 0" class="char-count">{{ form.statusMessage.length }}/200</small>
       </label>
       <div class="feedback">
         <p v-if="feedback" class="success">{{ feedback }}</p>
@@ -217,6 +219,15 @@ textarea:focus {
   margin: 0;
   color: var(--danger-primary);
   font-weight: 600;
+}
+
+.char-count {
+  color: var(--text-subtle);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+  margin-top: 0.25rem;
 }
 
 button {

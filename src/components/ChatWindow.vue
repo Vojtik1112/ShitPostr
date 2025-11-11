@@ -81,10 +81,6 @@ const handleKeydown = (event) => {
     </form>
   </section>
   <section v-else class="chat-window chat-window--empty">
-
-      textarea::placeholder {
-        color: rgba(58, 36, 20, 0.55);
-      }
     <h2>Vyber místnost</h2>
     <p>Vytvoř novou kabinku nebo se připoj k té, kde to právě bublá.</p>
   </section>
@@ -107,17 +103,33 @@ const handleKeydown = (event) => {
   padding: 1.5rem 2rem;
   border-bottom: 1px solid rgba(58, 36, 20, 0.08);
   background: rgba(255, 255, 255, 0.45);
+  min-width: 0;
+  gap: 1rem;
+}
+
+.chat-window__header > div {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
 }
 
 .chat-window__header h2 {
   margin: 0;
   color: #3b1c0d;
   letter-spacing: 0.02em;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.3;
 }
 
 .chat-window__header p {
   margin: 0.35rem 0 0;
   color: rgba(58, 36, 20, 0.7);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  line-height: 1.3;
 }
 
 .participant-count {
@@ -125,6 +137,8 @@ const handleKeydown = (event) => {
   color: rgba(58, 36, 20, 0.65);
   text-transform: uppercase;
   letter-spacing: 0.12em;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .chat-window__messages {
@@ -187,10 +201,6 @@ textarea {
   background: rgba(255, 255, 255, 0.8);
   color: #3b1c0d;
   line-height: 1.5;
-}
-
-textarea::placeholder {
-  color: rgba(58, 36, 20, 0.55);
 }
 
 textarea:focus {
