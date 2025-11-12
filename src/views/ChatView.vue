@@ -99,13 +99,14 @@ const handleSendMessage = (body) => {
   position: relative;
   flex: 1;
   display: grid;
-  grid-template-columns: 320px minmax(0, 1fr);
-  gap: 1.75rem;
-  padding: 2.5rem 2.5rem 3rem;
-  width: min(1120px, 100%);
+  grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
+  gap: 2rem;
+  padding: 3.5rem 1.75rem 3.5rem;
+  width: min(1120px, calc(100% - 2.5rem));
   margin: 0 auto;
   align-items: stretch;
-  min-height: calc(100vh - 5.5rem);
+  min-height: calc(100vh - 6rem);
+  animation: chat-layout-in 0.45s ease both;
 }
 
 .modal-backdrop {
@@ -215,23 +216,49 @@ button.ghost {
   margin-top: 0.25rem;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1080px) {
   .chat-layout {
-    grid-template-columns: 280px minmax(0, 1fr);
-    padding: 2.25rem 1.75rem;
+    width: min(1020px, calc(100% - 2rem));
+    grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 960px) {
+  .chat-layout {
+    padding: 3rem 1.5rem 3.25rem;
+    gap: 1.5rem;
   }
 }
 
 @media (max-width: 860px) {
   .chat-layout {
     grid-template-columns: minmax(0, 1fr);
-    padding: 2rem 1.25rem;
+    padding: 2.5rem 1.1rem 3rem;
+    width: calc(100% - 1.5rem);
   }
 
   .chat-layout :deep(.sidebar) {
     position: sticky;
     top: 4.5rem;
     z-index: 5;
+  }
+}
+
+@media (max-width: 640px) {
+  .chat-layout {
+    padding-top: 2rem;
+  }
+}
+
+@keyframes chat-layout-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 </style>

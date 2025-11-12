@@ -29,6 +29,39 @@ import { RouterLink } from 'vue-router';
         <p>Vlastní avatary, statusy a ochotný uklízeč bot, který ti poblahopřeje ke každému riskantnímu rozhodnutí.</p>
       </article>
     </div>
+    <div class="welcome__preview">
+      <div class="preview-card">
+        <header>
+          <span>Živá nástěnka</span>
+          <span class="badge">Ukázka</span>
+        </header>
+        <ul>
+          <li>
+            <span class="name">Lucie</span>
+            <span class="message">Kafe v kuchyňce voní podezřele po skořici. Kdo za tím je?</span>
+            <span class="timestamp">14:07</span>
+          </li>
+          <li>
+            <span class="name">Venca</span>
+            <span class="message">U páteční kabinky se uvolnilo místo. Noste si vlastní fixy!</span>
+            <span class="timestamp">14:05</span>
+          </li>
+          <li>
+            <span class="name">BOT Uklízeč</span>
+            <span class="message">Gratulujeme! Vaše meme "Planeta WC" právě překročilo 500 reakcí.</span>
+            <span class="timestamp">13:58</span>
+          </li>
+        </ul>
+      </div>
+      <div class="preview-notes">
+        <h3>V kabince máš navrch</h3>
+        <ul>
+          <li>Reálný čas, žádné algoritmy ani shadowbany.</li>
+          <li>Kurátorské nálepky a privátní klíče pro tajné místnosti.</li>
+          <li>Vtipný bot, který drží pořádek a připomíná pauzu.</li>
+        </ul>
+      </div>
+    </div>
   </section>
 </template>
 
@@ -36,8 +69,8 @@ import { RouterLink } from 'vue-router';
 .welcome {
   display: grid;
   gap: 4rem;
-  padding: 4.5rem 2.5rem 3rem;
-  max-width: 960px;
+  padding: 4.75rem 2.75rem 3.5rem;
+  max-width: 1060px;
   margin: 0 auto;
 }
 
@@ -118,5 +151,141 @@ import { RouterLink } from 'vue-router';
 .info-card p {
   margin: 0;
   color: var(--text-muted);
+}
+
+.welcome__preview {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  align-items: stretch;
+}
+
+.preview-card {
+  border-radius: 2rem;
+  padding: 2rem;
+  border: 1px solid rgba(255, 240, 214, 0.14);
+  background: rgba(27, 12, 5, 0.65);
+  box-shadow: 0 36px 120px -70px rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(18px);
+  display: grid;
+  gap: 1.25rem;
+}
+
+.preview-card header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 245, 221, 0.7);
+}
+
+.preview-card .badge {
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 240, 214, 0.3);
+  background: rgba(255, 245, 221, 0.12);
+  color: var(--sand-050);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+}
+
+.preview-card ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.preview-card li {
+  padding: 1.1rem 1.25rem;
+  border-radius: 1.4rem;
+  background: rgba(255, 245, 221, 0.08);
+  border: 1px solid rgba(255, 240, 214, 0.12);
+  display: grid;
+  gap: 0.35rem;
+  position: relative;
+}
+
+.preview-card li::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(246, 183, 104, 0.18), transparent 45%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.preview-card .name {
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--sand-050);
+}
+
+.preview-card .message {
+  color: rgba(255, 245, 221, 0.78);
+  line-height: 1.45;
+}
+
+.preview-card .timestamp {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: rgba(255, 245, 221, 0.65);
+  text-transform: uppercase;
+}
+
+.preview-notes {
+  border-radius: 2rem;
+  padding: 2.2rem 2rem;
+  border: 1px solid rgba(255, 240, 214, 0.12);
+  background: rgba(42, 20, 8, 0.58);
+  box-shadow: 0 32px 100px -70px rgba(0, 0, 0, 0.7);
+  display: grid;
+  gap: 1.2rem;
+}
+
+.preview-notes h3 {
+  margin: 0;
+  color: var(--sand-050);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 1.15rem;
+}
+
+.preview-notes ul {
+  margin: 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.preview-notes li::marker {
+  color: rgba(246, 183, 104, 0.8);
+}
+
+@media (max-width: 960px) {
+  .welcome {
+    padding: 4rem 2rem 3rem;
+    gap: 3.25rem;
+  }
+
+  .welcome__preview {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 680px) {
+  .welcome {
+    padding: 3.5rem 1.5rem 2.75rem;
+  }
+
+  .welcome__hero p {
+    font-size: 1rem;
+  }
 }
 </style>

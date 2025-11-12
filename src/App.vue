@@ -38,9 +38,116 @@ const showHeader = computed(() => authStore.isAuthenticated)
 
 <template>
   <div class="app-shell">
-    <AppHeader v-if="showHeader" />
-    <main class="app-main">
-      <RouterView />
-    </main>
+    <div class="app-shell__background" aria-hidden="true">
+      <span class="app-shell__glow app-shell__glow--one"></span>
+      <span class="app-shell__glow app-shell__glow--two"></span>
+      <span class="app-shell__glow app-shell__glow--three"></span>
+      <span class="app-shell__texture"></span>
+    </div>
+    <div class="app-shell__content">
+      <AppHeader v-if="showHeader" />
+      <main class="app-main">
+        <RouterView />
+      </main>
+    </div>
   </div>
 </template>
+
+<style scoped>
+.app-shell {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-shell__background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.app-shell__glow {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.75;
+  transform: translate3d(0, 0, 0);
+}
+
+.app-shell__glow--one {
+  width: 42vw;
+  height: 42vw;
+  top: -18vw;
+  left: -12vw;
+  background: radial-gradient(circle, rgba(246, 183, 104, 0.4) 0%, rgba(246, 183, 104, 0) 70%);
+}
+
+.app-shell__glow--two {
+  width: 48vw;
+  height: 48vw;
+  bottom: -22vw;
+  right: -16vw;
+  background: radial-gradient(circle, rgba(92, 56, 34, 0.45) 0%, rgba(92, 56, 34, 0) 70%);
+}
+
+.app-shell__glow--three {
+  width: 32vw;
+  height: 32vw;
+  top: 35vh;
+  right: 10vw;
+  background: radial-gradient(circle, rgba(255, 245, 221, 0.22) 0%, rgba(255, 245, 221, 0) 70%);
+}
+
+.app-shell__texture {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 245, 221, 0.12) 1px, transparent 0);
+  background-size: 70px 70px;
+  opacity: 0.15;
+  mix-blend-mode: screen;
+}
+
+.app-shell__content {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 960px) {
+  .app-shell__glow--three {
+    right: 4vw;
+    width: 40vw;
+    height: 40vw;
+  }
+}
+
+@media (max-width: 720px) {
+  .app-shell__glow--one,
+  .app-shell__glow--two,
+  .app-shell__glow--three {
+    display: none;
+  }
+
+  .app-shell__texture {
+    opacity: 0.08;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-shell__glow {
+    transition: none;
+    animation: none;
+  }
+}
+</style>

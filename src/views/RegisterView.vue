@@ -43,6 +43,9 @@ const validate = () => {
   if (form.password.length < 8) {
     fieldErrors.password = 'Heslo musí mít alespoň 8 znaků.'
   }
+  if (form.password.length > 128) {
+    fieldErrors.password = 'Heslo může mít maximálně 128 znaků.'
+  }
   if (!form.termsAccepted) {
     fieldErrors.termsAccepted = 'Bez souhlasu s podmínkami kabinku neodemkneme.'
   }
