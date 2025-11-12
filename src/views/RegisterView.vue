@@ -1,8 +1,8 @@
 <script setup>
 import { reactive, ref } from 'vue'
 import { RouterLink, useRouter } from 'vue-router'
-import { useAuthStore } from '../stores/auth'
 import logo from '../assets/Shitpostrlogo.png'
+import { useAuthStore } from '../stores/auth'
 
 const router = useRouter()
 const authStore = useAuthStore()
