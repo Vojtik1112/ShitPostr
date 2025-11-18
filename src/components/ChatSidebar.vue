@@ -15,15 +15,29 @@ const props = defineProps({
 const emit = defineEmits(['select', 'create'])
 
 const query = ref('')
+const filterMode = ref('all')
 
-const filteredConversations = computed(() => {
+const totalUnread = computed(() => {
+  return props.conversations.reduce((sum, conversation) => sum + (conversation.unreadCount || 0), 0)
+})
+
+const filteredByQuery = computed(() => {
   if (!query.value.trim()) {
     return props.conversations
   }
   const q = query.value.trim().toLowerCase()
-  return props.conversations.filter((conversation) =>
-    conversation.title.toLowerCase().includes(q) || conversation.description.toLowerCase().includes(q),
-  )
+  return props.conversations.filter((conversation) => {
+    const title = (conversation.title || '').toLowerCase()
+    const description = (conversation.description || '').toLowerCase()
+    return title.includes(q) || description.includes(q)
+  })
+})
+
+const filteredConversations = computed(() => {
+  if (filterMode.value === 'unread') {
+    return filteredByQuery.value.filter((conversation) => (conversation.unreadCount || 0) > 0)
+  }
+  return filteredByQuery.value
 })
 
 const handleSelect = (conversationId) => {
@@ -33,6 +47,46 @@ const handleSelect = (conversationId) => {
 const handleCreate = () => {
   emit('create')
 }
+
+const setFilterMode = (mode) => {
+  filterMode.value = mode
+}
+
+const lastMessageOf = (conversation) => {
+  if (conversation.lastMessage) {
+    return conversation.lastMessage
+  }
+  if (Array.isArray(conversation.messages) && conversation.messages.length > 0) {
+    return conversation.messages[conversation.messages.length - 1]
+  }
+  return null
+}
+
+const timeFormatter = typeof Intl !== 'undefined' ? new Intl.DateTimeFormat(undefined, { hour: '2-digit', minute: '2-digit' }) : null
+const dayFormatter = typeof Intl !== 'undefined' ? new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric' }) : null
+
+const formatTimestamp = (timestamp) => {
+  if (!timestamp) {
+    return ''
+  }
+  const parsed = Date.parse(timestamp)
+  if (Number.isNaN(parsed)) {
+    return ''
+  }
+  if (!timeFormatter || !dayFormatter) {
+    return new Date(parsed).toLocaleTimeString()
+  }
+  const date = new Date(parsed)
+  const now = new Date()
+  if (
+    date.getFullYear() === now.getFullYear() &&
+    date.getMonth() === now.getMonth() &&
+    date.getDate() === now.getDate()
+  ) {
+    return timeFormatter.format(date)
+  }
+  return dayFormatter.format(date)
+}
 </script>
 
 <template>
@@ -40,6 +94,31 @@ const handleCreate = () => {
     <div class="sidebar__header">
       <h2>Místnosti</h2>
       <button type="button" class="pill" @click="handleCreate">+ Nová místnost</button>
+    </div>
+    <div class="sidebar__filters" role="radiogroup" aria-label="Filtr místností">
+      <button
+        type="button"
+        class="filter-pill"
+        :class="{ active: filterMode === 'all' }"
+        :aria-pressed="filterMode === 'all'
+          ? 'true'
+          : 'false'"
+        @click="setFilterMode('all')"
+      >
+        <span>Vše</span>
+      </button>
+      <button
+        type="button"
+        class="filter-pill"
+        :class="{ active: filterMode === 'unread', muted: !totalUnread }"
+        :aria-pressed="filterMode === 'unread'
+          ? 'true'
+          : 'false'"
+        @click="setFilterMode('unread')"
+      >
+        <span>Nepřečtené</span>
+        <span v-if="totalUnread" class="filter-pill__badge">{{ totalUnread > 99 ? '99+' : totalUnread }}</span>
+      </button>
     </div>
     <div class="sidebar__search">
       <input v-model="query" type="search" placeholder="Hledat místnost" />
@@ -58,17 +137,23 @@ const handleCreate = () => {
           <span class="conversation__title">{{ conversation.title }}</span>
           <p v-if="conversation.description" class="conversation__meta">{{ conversation.description }}</p>
           <div class="conversation__footer">
-            <p
-              v-if="conversation.messages && conversation.messages.length"
-              class="conversation__preview"
-            >
-              {{ conversation.messages[conversation.messages.length - 1].authorName }}:
-              <span>{{ conversation.messages[conversation.messages.length - 1].body }}</span>
+            <p v-if="lastMessageOf(conversation)" class="conversation__preview">
+              {{ lastMessageOf(conversation).authorName }}:
+              <span>{{ lastMessageOf(conversation).body }}</span>
             </p>
             <span v-else class="conversation__empty">Zatím prázdná kabinka</span>
-            <span v-if="conversation.messages && conversation.messages.length" class="conversation__badge">
-              {{ conversation.messages.length }}
-            </span>
+            <div class="conversation__status">
+              <span v-if="lastMessageOf(conversation)" class="conversation__time">
+                {{ formatTimestamp(lastMessageOf(conversation).timestamp) }}
+              </span>
+              <span
+                v-if="conversation.unreadCount"
+                class="conversation__badge"
+                :aria-label="`Nepřečtených zpráv: ${conversation.unreadCount}`"
+              >
+                {{ conversation.unreadCount > 99 ? '99+' : conversation.unreadCount }}
+              </span>
+            </div>
           </div>
         </span>
       </button>
@@ -151,6 +236,49 @@ const handleCreate = () => {
   background: rgba(255, 240, 214, 0.14);
 }
 
+.sidebar__filters {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.filter-pill {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 240, 214, 0.14);
+  background: rgba(255, 245, 221, 0.05);
+  padding: 0.35rem 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(255, 245, 221, 0.75);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  transition: border 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.filter-pill.active {
+  border-color: rgba(255, 240, 214, 0.45);
+  background: rgba(255, 245, 221, 0.18);
+  color: var(--sand-050);
+}
+
+.filter-pill.muted {
+  opacity: 0.7;
+}
+
+.filter-pill__badge {
+  border-radius: 999px;
+  padding: 0.05rem 0.55rem;
+  background: rgba(255, 245, 221, 0.22);
+  color: var(--brown-900);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+}
+
 .sidebar__list {
   overflow-y: auto;
   display: grid;
@@ -230,10 +358,8 @@ const handleCreate = () => {
 
 .conversation__footer {
   margin-top: 0.4rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
+  display: grid;
+  gap: 0.4rem;
 }
 
 .conversation__preview {
@@ -269,6 +395,20 @@ const handleCreate = () => {
   font-weight: 700;
   font-size: 0.75rem;
   letter-spacing: 0.08em;
+}
+
+.conversation__status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.conversation__time {
+  font-size: 0.75rem;
+  color: rgba(255, 245, 221, 0.7);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .sidebar__empty {

@@ -11,6 +11,21 @@ const chatStore = useChatStore()
 const conversations = computed(() => chatStore.conversations)
 const activeConversation = computed(() => chatStore.activeConversation)
 
+const sidebarConversations = computed(() => {
+  return conversations.value
+    .map((conversation) => {
+      const lastMessage = conversation.messages?.[conversation.messages.length - 1] || null
+      const lastActivity = lastMessage ? Date.parse(lastMessage.timestamp) : 0
+      return {
+        ...conversation,
+        lastMessage,
+        lastActivity: Number.isNaN(lastActivity) ? 0 : lastActivity,
+        unreadCount: chatStore.getUnreadCount(conversation.id),
+      }
+    })
+    .sort((a, b) => b.lastActivity - a.lastActivity)
+})
+
 const showCreateModal = ref(false)
 const createForm = reactive({
   title: '',
@@ -59,7 +74,7 @@ const handleSendMessage = (body) => {
 <template>
   <div class="chat-layout">
     <ChatSidebar
-      :conversations="conversations"
+      :conversations="sidebarConversations"
       :active-id="chatStore.activeConversationId"
       @select="handleSelectConversation"
       @create="openCreateModal"

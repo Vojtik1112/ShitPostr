@@ -73,6 +73,32 @@ const cleanConversationList = (list) => {
   return list.map((conversation) => hardenConversationRecord(conversation)).filter(Boolean)
 }
 
+const sanitizeLastReadMap = (rawMap) => {
+  if (!rawMap || typeof rawMap !== 'object') {
+    return {}
+  }
+  const cleaned = {}
+  for (const [key, value] of Object.entries(rawMap)) {
+    const conversationId = sanitizeInlineText(String(key ?? ''), 120)
+    if (!conversationId) {
+      continue
+    }
+    let timestamp = null
+    if (typeof value === 'number' && Number.isFinite(value)) {
+      timestamp = value
+    } else if (typeof value === 'string') {
+      const parsed = Date.parse(value)
+      if (!Number.isNaN(parsed)) {
+        timestamp = parsed
+      }
+    }
+    if (timestamp !== null) {
+      cleaned[conversationId] = timestamp
+    }
+  }
+  return cleaned
+}
+
 const loadStorageMap = () => {
   if (typeof window === 'undefined') {
     return {}
@@ -93,9 +119,11 @@ const loadStorageMap = () => {
       }
       result[ownerId] = {
         conversations: cleanConversationList(payload.conversations),
-        activeConversationId: typeof payload.activeConversationId === 'string'
-          ? sanitizeInlineText(payload.activeConversationId, 120)
-          : null,
+        activeConversationId:
+          typeof payload.activeConversationId === 'string'
+            ? sanitizeInlineText(payload.activeConversationId, 120)
+            : null,
+        lastReadMap: sanitizeLastReadMap(payload.lastReadMap),
       }
     }
     return result
@@ -171,6 +199,10 @@ export const useChatStore = defineStore('chat', () => {
   const conversations = ref([])
   const activeConversationId = ref(null)
   const isBootstrapped = ref(false)
+  const lastReadMap = ref({})
+
+  const findConversation = (conversationId) =>
+    conversations.value.find((conversation) => conversation.id === conversationId) || null
 
   const activeConversation = computed(() =>
     conversations.value.find((conversation) => conversation.id === activeConversationId.value) || null,
@@ -193,9 +225,18 @@ export const useChatStore = defineStore('chat', () => {
     if (stored && Array.isArray(stored.conversations)) {
       conversations.value = cleanConversationList(stored.conversations)
       activeConversationId.value = stored.activeConversationId || stored.conversations[0]?.id || null
+      lastReadMap.value = { ...stored.lastReadMap }
     } else {
       conversations.value = cleanConversationList(defaultConversations(user))
       activeConversationId.value = null
+      const seededMap = {}
+      const now = Date.now()
+      conversations.value.forEach((conversation) => {
+        const lastMessage = conversation.messages?.[conversation.messages.length - 1]
+        const timestamp = lastMessage ? Date.parse(lastMessage.timestamp) : now
+        seededMap[conversation.id] = Number.isNaN(timestamp) ? now : timestamp
+      })
+      lastReadMap.value = seededMap
       persist()
     }
 
@@ -207,6 +248,7 @@ export const useChatStore = defineStore('chat', () => {
     conversations.value = []
     activeConversationId.value = null
     isBootstrapped.value = false
+    lastReadMap.value = {}
   }
 
   const persist = () => {
@@ -216,22 +258,24 @@ export const useChatStore = defineStore('chat', () => {
     const storageMap = loadStorageMap()
     storageMap[ownerId.value] = {
       conversations: cleanConversationList(conversations.value),
-      activeConversationId: typeof activeConversationId.value === 'string'
-        ? sanitizeInlineText(activeConversationId.value, 120)
-        : null,
+      activeConversationId:
+        typeof activeConversationId.value === 'string'
+          ? sanitizeInlineText(activeConversationId.value, 120)
+          : null,
+      lastReadMap: { ...lastReadMap.value },
     }
     persistStorageMap(storageMap)
   }
 
   const setActiveConversation = (conversationId) => {
-    if (conversationId === activeConversationId.value) {
-      return
-    }
-    const exists = conversations.value.find((conversation) => conversation.id === conversationId)
+    const exists = findConversation(conversationId)
     if (!exists) {
       return
     }
-    activeConversationId.value = conversationId
+    if (conversationId !== activeConversationId.value) {
+      activeConversationId.value = conversationId
+    }
+    markConversationRead(conversationId)
   }
 
   const createConversation = ({ title, description }) => {
@@ -272,6 +316,7 @@ export const useChatStore = defineStore('chat', () => {
 
     conversations.value = [conversation, ...conversations.value]
     activeConversationId.value = conversation.id
+    markConversationRead(conversation.id)
     return conversation
   }
 
@@ -291,6 +336,7 @@ export const useChatStore = defineStore('chat', () => {
     })
 
     activeConversation.value.messages.push(outgoing)
+    markConversationRead(activeConversation.value.id, Date.parse(outgoing.timestamp))
 
     scheduleHelperBotReply(activeConversation.value)
     return outgoing
@@ -307,10 +353,54 @@ export const useChatStore = defineStore('chat', () => {
         body: helperBotResponses[Math.floor(Math.random() * helperBotResponses.length)],
       })
       conversation.messages.push(reply)
+      if (conversation.id === activeConversationId.value) {
+        markConversationRead(conversation.id, Date.parse(reply.timestamp))
+      }
     }, 1000 + Math.floor(Math.random() * 2000))
   }
 
-  watch([conversations, activeConversationId], persist, { deep: true })
+  function markConversationRead(conversationId, timestampOverride) {
+    if (!conversationId) {
+      return
+    }
+    const conversation = findConversation(conversationId)
+    if (!conversation) {
+      return
+    }
+    let resolvedTimestamp = null
+    if (typeof timestampOverride === 'number' && Number.isFinite(timestampOverride)) {
+      resolvedTimestamp = timestampOverride
+    }
+    if (resolvedTimestamp === null) {
+      const lastMessage = conversation.messages?.[conversation.messages.length - 1] || null
+      const parsed = lastMessage ? Date.parse(lastMessage.timestamp) : Date.now()
+      resolvedTimestamp = Number.isNaN(parsed) ? Date.now() : parsed
+    }
+    lastReadMap.value = {
+      ...lastReadMap.value,
+      [conversationId]: resolvedTimestamp,
+    }
+  }
+
+  const getUnreadCount = (conversationId) => {
+    const conversation = findConversation(conversationId)
+    if (!conversation || !Array.isArray(conversation.messages) || conversation.messages.length === 0) {
+      return 0
+    }
+    const checkpoint = lastReadMap.value[conversationId]
+    if (typeof checkpoint !== 'number') {
+      return conversation.messages.length
+    }
+    return conversation.messages.reduce((count, message) => {
+      const parsed = Date.parse(message.timestamp)
+      if (Number.isNaN(parsed)) {
+        return count + 1
+      }
+      return parsed > checkpoint ? count + 1 : count
+    }, 0)
+  }
+
+  watch([conversations, activeConversationId, lastReadMap], persist, { deep: true })
 
   return {
     activeConversation,
@@ -318,7 +408,9 @@ export const useChatStore = defineStore('chat', () => {
     bootstrap,
     conversations,
     createConversation,
+    getUnreadCount,
     isBootstrapped,
+    markConversationRead,
     reset,
     sendMessage,
     setActiveConversation,

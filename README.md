@@ -10,6 +10,7 @@ interactive chat surface powered by local storage.
 - Email/password registration and login stored locally (for demo purposes only)
 - Persistent user sessions with profile editing and avatar colour generation
 - Multi-stall chat experience with helper bot replies and live message stream
+- Smart sidebar with unread tracking, filtered views, and message preview metadata
 - Responsive layout with conversation search, room creation modal, and protected routes
 - Vue Router navigation guards and Pinia-based state management
 
