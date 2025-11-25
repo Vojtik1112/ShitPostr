@@ -18,13 +18,33 @@ const draft = ref('')
 const messageListRef = ref(null)
 
 const messages = computed(() => props.conversation?.messages ?? [])
+const notificationAudio =
+  typeof window !== 'undefined'
+    ? new Audio(new URL('../../notifikace.wav', import.meta.url))
+    : null
+
+if (notificationAudio) {
+  notificationAudio.preload = 'auto'
+  notificationAudio.volume = 0.75
+}
 
 watch(
   () => messages.value.length,
-  async () => {
+  async (newLength, oldLength) => {
     await nextTick()
     if (messageListRef.value) {
       messageListRef.value.scrollTop = messageListRef.value.scrollHeight
+    }
+
+    if (
+      typeof oldLength === 'number' &&
+      newLength > oldLength &&
+      notificationAudio
+    ) {
+      notificationAudio.currentTime = 0
+      notificationAudio.play().catch(() => {
+        /* Browsers block autoplay until user interaction; ignore errors */
+      })
     }
   },
 )
