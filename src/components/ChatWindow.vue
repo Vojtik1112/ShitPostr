@@ -115,6 +115,7 @@ const handleKeydown = (event) => {
   position: relative;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100%;
   background: rgba(27, 13, 6, 0.72);
   border-radius: 2.3rem;
   border: 1px solid rgba(255, 240, 214, 0.12);

@@ -113,15 +113,18 @@ const showHeader = computed(() => authStore.isAuthenticated)
 .app-shell__content {
   position: relative;
   z-index: 1;
-  flex: 1;
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  min-height: 0;
 }
 
 .app-main {
-  flex: 1;
+  flex: 1 1 auto;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
 }
 
 @media (max-width: 960px) {

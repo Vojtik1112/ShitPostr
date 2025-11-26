@@ -72,15 +72,18 @@ const handleSendMessage = (body) => {
 </script>
 
 <template>
-  <div class="chat-layout">
-    <ChatSidebar
-      :conversations="sidebarConversations"
-      :active-id="chatStore.activeConversationId"
-      @select="handleSelectConversation"
-      @create="openCreateModal"
-    />
-    <ChatWindow :conversation="activeConversation" :current-user="authStore.currentUser" @send="handleSendMessage" />
+  <div class="chat-view">
+    <div class="chat-layout">
+      <ChatSidebar
+        :conversations="sidebarConversations"
+        :active-id="chatStore.activeConversationId"
+        @select="handleSelectConversation"
+        @create="openCreateModal"
+      />
+      <ChatWindow :conversation="activeConversation" :current-user="authStore.currentUser" @send="handleSendMessage" />
+    </div>
 
+    <!-- modal moved out of .chat-layout so position:fixed is viewport-anchored -->
     <div v-if="showCreateModal" class="modal-backdrop" @click.self="closeCreateModal">
       <section class="modal">
         <header>
@@ -95,7 +98,12 @@ const handleSendMessage = (body) => {
           </label>
           <label>
             <span>Popis</span>
-            <textarea v-model="createForm.description" rows="3" placeholder="Plánujeme velkou splachovací loupež" maxlength="200"></textarea>
+            <textarea
+              v-model="createForm.description"
+              rows="3"
+              placeholder="Plánujeme velkou splachovací loupež"
+              maxlength="200"
+            ></textarea>
             <small v-if="createForm.description.length > 0" class="char-count">{{ createForm.description.length }}/200</small>
           </label>
           <p v-if="createError" class="error">{{ createError }}</p>
@@ -110,18 +118,101 @@ const handleSendMessage = (body) => {
 </template>
 
 <style scoped>
+.chat-view {
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  padding: 0.75rem 0 2rem;
+  overflow: visible;
+}
+
 .chat-layout {
   position: relative;
-  flex: 1;
+  flex: 1 1 auto;
   display: grid;
   grid-template-columns: minmax(260px, 300px) minmax(0, 1fr);
   gap: 2rem;
-  padding: 3.5rem 1.75rem 3.5rem;
+  padding: 1.5rem 1.75rem 2.75rem;
   width: min(1120px, calc(100% - 2.5rem));
   margin: 0 auto;
   align-items: stretch;
-  min-height: calc(100vh - 6rem);
+  min-height: 0;
+  height: 100%;
+  overflow: visible;
   animation: chat-layout-in 0.45s ease both;
+}
+
+.chat-layout :deep(.sidebar) {
+  position: sticky;
+  top: 3.25rem;
+  z-index: 5;
+  align-self: start;
+  margin-bottom: 0; 
+  max-height: calc(100vh - 3.25rem - 1rem);
+  padding-bottom: 0.75rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+}
+
+.chat-layout :deep(.sidebar) > * {
+  max-width: 100%;
+  box-sizing: border-box;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.chat-layout :deep(.sidebar) .header {
+  display: flex;
+  flex-direction: column; 
+  gap: 0.5rem;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.chat-layout :deep(.sidebar) .header button,
+.chat-layout :deep(.sidebar) .header .create {
+  align-self: flex-start;
+  white-space: normal;
+  overflow: visible;
+}
+
+.chat-layout :deep(.sidebar) .title,
+.chat-layout :deep(.sidebar) .header-title {
+  white-space: normal;
+  overflow: visible;
+  overflow-wrap: break-word;
+  word-break: normal;
+  display: block;
+  max-width: 100%;
+}
+
+.chat-layout :deep(.sidebar) .conversation,
+.chat-layout :deep(.sidebar) .conversation * {
+  box-sizing: border-box;
+  max-width: 100%;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+
+.chat-layout :deep(.sidebar) img,
+.chat-layout :deep(.sidebar) svg,
+.chat-layout :deep(.sidebar) video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.chat-layout > * {
+  height: auto !important;
+  min-height: 0;
 }
 
 .modal-backdrop {
@@ -132,6 +223,7 @@ const handleSendMessage = (body) => {
   place-items: center;
   padding: 2rem;
   backdrop-filter: blur(4px);
+  z-index: 99999;
 }
 
 .modal {
@@ -250,12 +342,35 @@ button.ghost {
     grid-template-columns: minmax(0, 1fr);
     padding: 2.5rem 1.1rem 3rem;
     width: calc(100% - 1.5rem);
+    height: auto;
+    overflow: visible;
+    align-items: start;
   }
 
   .chat-layout :deep(.sidebar) {
     position: sticky;
-    top: 4.5rem;
+    top: 3.25rem;
     z-index: 5;
+    align-self: start;
+    margin-bottom: 0; 
+    max-height: calc(100vh - 3.25rem - 1rem);
+    padding-bottom: 0.75rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-width: 100%;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
+  .chat-layout > * {
+    height: auto !important;
+    min-height: 0;
+  }
+
+  .chat-view {
+    height: auto;
+    overflow: visible;
   }
 }
 

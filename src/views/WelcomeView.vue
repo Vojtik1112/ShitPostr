@@ -5,60 +5,51 @@ import { RouterLink } from 'vue-router';
 <template>
   <section class="welcome">
     <div class="welcome__hero">
-      <h1>Spláchni horká moudra s partou.</h1>
+      <h1>SHITPOSTR</h1>
       <p>
-        ShitPostr je společná nástěnka na dveřích kabinky. Zaber si místo, zanech vzkaz a sleduj reakce v reálném
-        čase bez filtru algoritmů.
+        ShitPostr je jednoduchá chatovací platforma pro kamarády. 
       </p>
       <div class="welcome__cta">
-        <RouterLink class="btn primary" :to="{ name: 'register' }">Získat kabinku</RouterLink>
-        <RouterLink class="btn ghost" :to="{ name: 'login' }">Už mám papír</RouterLink>
+        <RouterLink class="btn primary" :to="{ name: 'register' }">Vytvořit účet</RouterLink>
+        <RouterLink class="btn ghost" :to="{ name: 'login' }">Příhlásit se</RouterLink>
       </div>
     </div>
     <div class="welcome__card-grid">
       <article class="info-card">
-        <h3>Kabinka vedle kabinky</h3>
-        <p>Myšlenku pošleš rychleji než spláchneš. Všichni ji slyší, nikdo ji neodscrolluje.</p>
+        <h3>Chatovací místnosti</h3>
+        <p>Udělej si s kámošem společnou místnost kde můžete kakat spolu.</p>
       </article>
       <article class="info-card">
         <h3>Chaos pod kontrolou</h3>
-        <p>Zakládáš tématické kabinky, připínáš elitní graffiti a účtenky schováváš do voňavých košů.</p>
+        <p>Zakládáš tématické kabinky, posíláš h*vna do chatu a bavíš se.</p>
       </article>
       <article class="info-card">
         <h3>Oslav bordel</h3>
-        <p>Vlastní avatary, statusy a ochotný uklízeč bot, který ti poblahopřeje ke každému riskantnímu rozhodnutí.</p>
+        <p>Vlastní profilovky, statusy a chatbot, který ti pomáhá udržet pořádek.</p>
       </article>
     </div>
     <div class="welcome__preview">
       <div class="preview-card">
         <header>
-          <span>Živá nástěnka</span>
-          <span class="badge">Ukázka</span>
+          <span>MÍSTNOSTI</span>
+          <span class="badge">Pouze ukázka</span>
         </header>
         <ul>
           <li>
-            <span class="name">Lucie</span>
-            <span class="message">Kafe v kuchyňce voní podezřele po skořici. Kdo za tím je?</span>
+            <span class="name">Erika Kirk</span>
+            <span class="message">I do not love my husband with a shallow, fleeting fondness...</span>
             <span class="timestamp">14:07</span>
           </li>
           <li>
             <span class="name">Venca</span>
-            <span class="message">U páteční kabinky se uvolnilo místo. Noste si vlastní fixy!</span>
-            <span class="timestamp">14:05</span>
+            <span class="message">U páteční kabinky se uvolnilo místo. Bude shit párty</span>
+            <span class="timestamp">23:05</span>
           </li>
           <li>
             <span class="name">BOT Uklízeč</span>
             <span class="message">Gratulujeme! Vaše meme "Planeta WC" právě překročilo 500 reakcí.</span>
             <span class="timestamp">13:58</span>
           </li>
-        </ul>
-      </div>
-      <div class="preview-notes">
-        <h3>V kabince máš navrch</h3>
-        <ul>
-          <li>Reálný čas, žádné algoritmy ani shadowbany.</li>
-          <li>Kurátorské nálepky a privátní klíče pro tajné místnosti.</li>
-          <li>Vtipný bot, který drží pořádek a připomíná pauzu.</li>
         </ul>
       </div>
     </div>

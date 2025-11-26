@@ -35,7 +35,7 @@ const validate = () => {
   generalError.value = ''
 
   if (!form.displayName.trim()) {
-    fieldErrors.displayName = 'Vyber si přezdívku, ať tě ostatní poznají.'
+    fieldErrors.displayName = 'Vyber si přezdívku!'
   }
   if (!form.email.trim()) {
     fieldErrors.email = 'E-mail je povinný.'
@@ -47,10 +47,10 @@ const validate = () => {
     fieldErrors.password = 'Heslo může mít maximálně 128 znaků.'
   }
   if (!form.termsAccepted) {
-    fieldErrors.termsAccepted = 'Bez souhlasu s podmínkami kabinku neodemkneme.'
+    fieldErrors.termsAccepted = 'Bez souhlasu s podmínkami nemůžeš pokračovat.'
   }
   if (!form.chaosAccepted) {
-    fieldErrors.chaosAccepted = 'Potvrď, že zvládneš naše notifikace bez fyzické újmy.'
+    fieldErrors.chaosAccepted = 'Potvrď to plski'
   }
 
   return (
@@ -140,7 +140,7 @@ const handleSubmit = async () => {
 
         <p v-if="generalError" class="form-error">{{ generalError }}</p>
         <button type="submit" :disabled="submitting">
-          {{ submitting ? 'Skladuji toaleťák...' : 'Zaregistrovat' }}
+          {{ submitting ? 'Vytvářím účet...' : 'Zaregistrovat' }}
         </button>
       </form>
     </section>
