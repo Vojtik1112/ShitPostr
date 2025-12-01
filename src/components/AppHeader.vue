@@ -1,7 +1,6 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import logo from '../assets/Shitpostrlogo.png'
 import { useAuthStore } from '../stores/auth'
 
 const authStore = useAuthStore()
@@ -56,12 +55,6 @@ watch(
 <template>
   <header class="app-header" :class="{ 'is-open': isNavOpen }">
     <div class="app-header__brand">
-      <router-link class="brand" :to="{ name: 'chat' }">
-        <img :src="logo" alt="ShitPostr" class="brand__logo" />
-        <span class="brand__copy">
-          <span class="brand__title">ShitPostr</span>
-        </span>
-      </router-link>
       <button
         class="nav-toggle"
         type="button"
@@ -115,34 +108,8 @@ watch(
 .app-header__brand {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 1rem;
-}
-
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  color: var(--sand-050);
-}
-
-.brand__logo {
-  width: 74px;
-  height: 74px;
-  object-fit: contain;
-  display: block;
-}
-
-.brand__copy {
-  display: flex;
-  flex-direction: column;
-  line-height: 1.05;
-}
-
-.brand__title {
-  font-family: 'Pacifico', cursive;
-  font-size: 1.6rem;
-  letter-spacing: 0.05em;
 }
 
 .nav-toggle {
@@ -291,14 +258,6 @@ button.ghost:hover {
 }
 
 @media (max-width: 960px) {
-  .brand__logo {
-    width: 60px;
-    height: 60px;
-  }
-
-  .brand__title {
-    font-size: 1.45rem;
-  }
 }
 
 @media (max-width: 800px) {
@@ -377,15 +336,6 @@ button.ghost:hover {
 
   .identity {
     flex-basis: auto;
-  }
-
-  .brand__logo {
-    width: 52px;
-    height: 52px;
-  }
-
-  .brand__title {
-    font-size: 1.35rem;
   }
 }
 

@@ -1,9 +1,10 @@
 <script setup>
 import { computed, onMounted, watch } from 'vue'
-import { RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import AppHeader from './components/AppHeader.vue'
 import { useAuthStore } from './stores/auth'
 import { useChatStore } from './stores/chat'
+import logo from './assets/Shitpostrlogo.png'
 
 const authStore = useAuthStore()
 const chatStore = useChatStore()
@@ -45,6 +46,10 @@ const showHeader = computed(() => authStore.isAuthenticated)
       <span class="app-shell__texture"></span>
     </div>
     <div class="app-shell__content">
+      <RouterLink v-if="showHeader" class="brand-corner" :to="{ name: 'chat' }">
+        <img :src="logo" alt="ShitPostr" class="brand-corner__logo" />
+        <span class="brand-corner__title">ShitPostr</span>
+      </RouterLink>
       <AppHeader v-if="showHeader" />
       <main class="app-main">
         <RouterView />
@@ -119,6 +124,38 @@ const showHeader = computed(() => authStore.isAuthenticated)
   min-height: 0;
 }
 
+.brand-corner {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--sand-050);
+  text-decoration: none;
+  z-index: 100;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  pointer-events: auto;
+}
+
+.brand-corner:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}
+
+.brand-corner__logo {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  display: block;
+}
+
+.brand-corner__title {
+  font-family: 'Pacifico', cursive;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+}
+
 .app-main {
   flex: 1 1 auto;
   display: flex;
@@ -133,6 +170,15 @@ const showHeader = computed(() => authStore.isAuthenticated)
     width: 40vw;
     height: 40vw;
   }
+
+  .brand-corner__logo {
+    width: 48px;
+    height: 48px;
+  }
+
+  .brand-corner__title {
+    font-size: 1.25rem;
+  }
 }
 
 @media (max-width: 720px) {
@@ -144,6 +190,37 @@ const showHeader = computed(() => authStore.isAuthenticated)
 
   .app-shell__texture {
     opacity: 0.08;
+  }
+
+  .brand-corner {
+    top: 1rem;
+    left: 1rem;
+  }
+
+  .brand-corner__logo {
+    width: 44px;
+    height: 44px;
+  }
+
+  .brand-corner__title {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-corner {
+    top: 0.75rem;
+    left: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .brand-corner__logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .brand-corner__title {
+    font-size: 1rem;
   }
 }
 

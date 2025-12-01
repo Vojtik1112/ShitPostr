@@ -36,15 +36,12 @@ const handleFileSelect = (event) => {
     return
   }
 
-  if (file.size > 5 * 1024 * 1024) {
-    errorMessage.value = 'Obrázek je příliš velký. Maximálně 5MB.'
-    return
-  }
-
   const reader = new FileReader()
   reader.onload = (e) => {
-    avatarPreview.value = e.target.result
-    form.avatarUrl = e.target.result
+    const dataUrl = e.target.result
+
+    avatarPreview.value = dataUrl
+    form.avatarUrl = dataUrl
     errorMessage.value = ''
   }
   reader.onerror = () => {
@@ -70,13 +67,26 @@ const handleSubmit = async () => {
   feedback.value = ''
   errorMessage.value = ''
   try {
-    await authStore.updateProfile({
+    console.log('Submitting profile update:', {
       displayName: form.displayName,
       statusMessage: form.statusMessage,
-      avatarUrl: form.avatarUrl,
+      avatarUrl: form.avatarUrl ? 'present' : 'null/undefined',
+      avatarUrlLength: form.avatarUrl?.length || 0
     })
+    const result = await authStore.updateProfile({
+      displayName: form.displayName,
+      statusMessage: form.statusMessage,
+      avatarUrl: form.avatarUrl ?? null,
+    })
+    console.log('Profile update result:', result)
+    // Ensure avatar preview is updated after save
+    if (result?.avatarUrl !== undefined) {
+      avatarPreview.value = result.avatarUrl
+      form.avatarUrl = result.avatarUrl
+    }
     feedback.value = 'Profil se povedlo uložit.'
   } catch (error) {
+    console.error('Failed to update profile', error)
     errorMessage.value = error.message || 'Něco uklouzlo. Zkus to prosím znovu.'
   } finally {
     saving.value = false
@@ -128,7 +138,9 @@ const handleSubmit = async () => {
         <p v-if="feedback" class="success">{{ feedback }}</p>
         <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
       </div>
-      <button type="submit" :disabled="saving">{{ saving ? 'Razím těsnění...' : 'Uložit profil' }}</button>
+      <button type="submit" :disabled="saving" @click="(e) => { console.log('Submit button clicked', { saving: saving.value }); }">
+        {{ saving ? 'Razím těsnění...' : 'Uložit profil' }}
+      </button>
     </form>
   </section>
 </template>

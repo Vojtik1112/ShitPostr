@@ -169,7 +169,7 @@ const formatTimestamp = (timestamp) => {
 .sidebar {
   height: 100%;
   display: grid;
-  grid-template-rows: auto auto minmax(0, 1fr);
+  grid-template-rows: auto auto auto minmax(0, 1fr);
   gap: 1.35rem;
   background: rgba(27, 12, 6, 0.75);
   border-radius: 2rem;
@@ -444,7 +444,9 @@ const formatTimestamp = (timestamp) => {
 
 @media (max-width: 860px) {
   .sidebar {
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto minmax(0, 1fr);
+    height: auto;
+    min-height: 0;
   }
 }
 

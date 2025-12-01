@@ -106,7 +106,7 @@ const handleKeydown = (event) => {
   </section>
   <section v-else class="chat-window chat-window--empty">
     <h2>Vyber místnost</h2>
-    <p>Vytvoř novou kabinku nebo se připoj k té, kde to právě bublá.</p>
+    <p>Vytvoř novou kabinku</p>
   </section>
 </template>
 
@@ -384,6 +384,13 @@ button:hover:enabled {
   button {
     width: 100%;
     justify-self: flex-end;
+  }
+}
+
+@media (max-width: 860px) {
+  .chat-window {
+    height: auto;
+    min-height: 400px;
   }
 }
 

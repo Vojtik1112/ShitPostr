@@ -235,17 +235,27 @@ export const useAuthStore = defineStore('auth', () => {
     if (typeof window === 'undefined') {
       return
     }
-    window.localStorage.setItem(USERS_KEY, JSON.stringify(users.value))
+    try {
+      window.localStorage.setItem(USERS_KEY, JSON.stringify(users.value))
+    } catch (error) {
+      console.warn('Failed to persist users to localStorage', error)
+      // Silently fail - data will be lost on refresh but app continues to work
+    }
   }
 
   const persistSession = () => {
     if (typeof window === 'undefined') {
       return
     }
-    if (currentUser.value) {
-      window.localStorage.setItem(SESSION_KEY, JSON.stringify(currentUser.value))
-    } else {
-      window.localStorage.removeItem(SESSION_KEY)
+    try {
+      if (currentUser.value) {
+        window.localStorage.setItem(SESSION_KEY, JSON.stringify(currentUser.value))
+      } else {
+        window.localStorage.removeItem(SESSION_KEY)
+      }
+    } catch (error) {
+      console.warn('Failed to persist session to localStorage', error)
+      // Silently fail - session will be lost on refresh but app continues to work
     }
   }
 
@@ -404,9 +414,19 @@ export const useAuthStore = defineStore('auth', () => {
 
     const requestedStatus = payload.statusMessage !== undefined ? sanitizeStatus(payload.statusMessage) : null
 
-    const avatarCandidate = payload.avatarUrl !== undefined ? sanitizeAvatarUrl(payload.avatarUrl) : undefined
-    if (payload.avatarUrl && !avatarCandidate) {
-      throw new Error('Nepodařilo se ověřit vybraný obrázek.')
+    // Handle avatarUrl - allow null to remove avatar, or validate if provided
+    let avatarCandidate = undefined
+    if (payload.avatarUrl !== undefined) {
+      if (payload.avatarUrl === null) {
+        // Explicitly setting to null to remove avatar
+        avatarCandidate = null
+      } else {
+        // Validate the avatar URL
+        avatarCandidate = sanitizeAvatarUrl(payload.avatarUrl)
+        if (payload.avatarUrl && !avatarCandidate) {
+          throw new Error('Nepodařilo se ověřit vybraný obrázek.')
+        }
+      }
     }
 
     const existingUser = users.value[index]
@@ -419,8 +439,11 @@ export const useAuthStore = defineStore('auth', () => {
 
     users.value.splice(index, 1, updated)
     currentUser.value = sanitizeUser(updated)
+    
+    // Try to persist, but don't fail if it doesn't work
     persistUsers()
     persistSession()
+    
     return currentUser.value
   }
 
