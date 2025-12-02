@@ -1,58 +1,38 @@
 <script setup>
 import { RouterLink } from 'vue-router';
+import logoSrc from '../assets/Shitpostrlogo.png';
 </script>
 
 <template>
   <section class="welcome">
     <div class="welcome__hero">
-      <h1>SHITPOSTR</h1>
+      <div class="welcome__logo" aria-hidden="false">
+        <img :src="logoSrc" alt="ShitPostr" class="auth-brand__logo" />
+        <h1>SHITPOSTR</h1>
+      </div>
+
       <p>
-        ShitPostr je jednoduchá chatovací platforma pro kamarády. 
+        ShitPostr je jednoduchá chatovací platforma pro kamarády.
       </p>
+
       <div class="welcome__cta">
         <RouterLink class="btn primary" :to="{ name: 'register' }">Vytvořit účet</RouterLink>
-        <RouterLink class="btn ghost" :to="{ name: 'login' }">Příhlásit se</RouterLink>
+        <RouterLink class="btn ghost" :to="{ name: 'login' }">Přihlásit se</RouterLink>
       </div>
     </div>
+
     <div class="welcome__card-grid">
       <article class="info-card">
         <h3>Chatovací místnosti</h3>
-        <p>Udělej si s kámošem společnou místnost kde můžete kakat spolu.</p>
+        <p>Udělej si s kámošem společnou místnost, kde můžete dělat bordel společně.</p>
       </article>
+
       <article class="info-card">
         <h3>Chaos pod kontrolou</h3>
-        <p>Zakládáš tématické kabinky, posíláš h*vna do chatu a bavíš se.</p>
-      </article>
-      <article class="info-card">
-        <h3>Oslav bordel</h3>
-        <p>Vlastní profilovky, statusy a chatbot, který ti pomáhá udržet pořádek.</p>
+        <p>Zakládáš tématické kabinky a organizuješ srandy bez zbytečného bordelu.</p>
       </article>
     </div>
-    <div class="welcome__preview">
-      <div class="preview-card">
-        <header>
-          <span>MÍSTNOSTI</span>
-          <span class="badge">Pouze ukázka</span>
-        </header>
-        <ul>
-          <li>
-            <span class="name">Erika Kirk</span>
-            <span class="message">I do not love my husband with a shallow, fleeting fondness...</span>
-            <span class="timestamp">14:07</span>
-          </li>
-          <li>
-            <span class="name">Venca</span>
-            <span class="message">U páteční kabinky se uvolnilo místo. Bude shit párty</span>
-            <span class="timestamp">23:05</span>
-          </li>
-          <li>
-            <span class="name">BOT Uklízeč</span>
-            <span class="message">Gratulujeme! Vaše meme "Planeta WC" právě překročilo 500 reakcí.</span>
-            <span class="timestamp">13:58</span>
-          </li>
-        </ul>
-      </div>
-    </div>
+
   </section>
 </template>
 
@@ -71,12 +51,26 @@ import { RouterLink } from 'vue-router';
   text-align: left;
 }
 
+.welcome__logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem; /* menší mezera mezi logem a názvem */
+}
+
+.logo-mark {
+  width: 64px;
+  height: 64px;
+  flex: 0 0 auto;
+}
+
 .welcome__hero h1 {
-  font-size: clamp(2.5rem, 5vw, 3.75rem);
-  letter-spacing: 0.08em;
+  font-family: 'Pacifico', cursive;
+  font-size: 2rem;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
   margin: 0;
   color: var(--sand-050);
+  font-weight: 400;
 }
 
 .welcome__hero p {
@@ -257,6 +251,13 @@ import { RouterLink } from 'vue-router';
 
 .preview-notes li::marker {
   color: rgba(246, 183, 104, 0.8);
+}
+
+.auth-brand__logo {
+  width: clamp(180px, 6.5vw, 80px);
+  height: auto;
+  display: block;
+  object-fit: contain;
 }
 
 @media (max-width: 960px) {
