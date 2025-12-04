@@ -4,6 +4,7 @@ import { createServer } from 'http';
 import { Server } from 'socket.io';
 import authRoutes from './routes/auth.js';
 import chatRoutes from './routes/chat.js';
+import { initDb } from './database.js';
 import { initSocket } from './socket.js';
 
 const app = express();
@@ -26,6 +27,8 @@ app.use('/api/chat', chatRoutes);
 
 // Socket.io
 initSocket(io);
+
+await initDb();
 
 httpServer.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

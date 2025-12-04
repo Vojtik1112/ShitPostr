@@ -1,5 +1,5 @@
 <script setup>
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, onMounted } from 'vue'
 import ChatSidebar from '../components/ChatSidebar.vue'
 import ChatWindow from '../components/ChatWindow.vue'
 import { useAuthStore } from '../stores/auth'
@@ -7,6 +7,12 @@ import { useChatStore } from '../stores/chat'
 
 const authStore = useAuthStore()
 const chatStore = useChatStore()
+
+onMounted(() => {
+  if (authStore.currentUser) {
+    chatStore.bootstrap(authStore.currentUser)
+  }
+})
 
 const conversations = computed(() => chatStore.conversations)
 const activeConversation = computed(() => chatStore.activeConversation)

@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken';
 import { all, run } from '../database.js';
 
 const router = express.Router();
-const SECRET_KEY = 'same-story-as-in-auth';
+const SECRET_KEY = "dw-its-diff-in-prod";
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];

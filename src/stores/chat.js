@@ -3,8 +3,8 @@ import { io } from 'socket.io-client'
 import { computed, ref } from 'vue'
 import { useAuthStore } from './auth'
 
-const API_URL = 'http://localhost:3000/api/chat'
-const SOCKET_URL = 'http://localhost:3000'
+const API_URL = '/api/chat'
+const SOCKET_URL = '/'
 
 export const useChatStore = defineStore('chat', () => {
   const authStore = useAuthStore()

@@ -3,7 +3,7 @@ import { computed, ref, watch } from 'vue'
 
 const SESSION_KEY = 'shitpostr-session'
 const TOKEN_KEY = 'shitpostr-token'
-const API_URL = 'http://localhost:3000/api/auth'
+const API_URL = '/api/auth'
 
 export const useAuthStore = defineStore('auth', () => {
   const currentUser = ref(null)

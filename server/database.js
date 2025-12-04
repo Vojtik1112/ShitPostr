@@ -106,7 +106,5 @@ const initDb = async () => {
   }
 };
 
-initDb();
-
-export { all, get, run };
+export { all, get, initDb, run };
 
