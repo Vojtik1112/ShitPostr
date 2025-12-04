@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 import { get, run } from '../database.js';
 
 const router = express.Router();
-const SECRET_KEY = 'your-secret-key-should-be-in-env'; // TODO: Move to env
+const SECRET_KEY = "dw-its-diff-in-prod"; 
 
 const generateToken = (user) => {
   return jwt.sign({ id: user.id, email: user.email }, SECRET_KEY, { expiresIn: '7d' });
